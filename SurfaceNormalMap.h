@@ -10,12 +10,12 @@
 
 using namespace std;
 
-struct LightSource { 
+struct lightsource { 
   int x; 
   int y; 
   int z;
 
-  pixel(int i=0, int j=0, int k=0) : x(i), y(j), z(k){}
+  lightsource(int i=0, int j=0, int k=0) : x(i), y(j), z(k){}
 };
 
 class SurfaceNormalMap{
