@@ -63,7 +63,7 @@ bool SurfaceNormalMap::visibleInAllImages(int r, int c, int threshold){
   bool visible = true;
 
   for(int i=0;i<images.size();i++){
-    if (images[i]->getPixel(i,j) < threshold){
+    if (images[i]->getPixel(r,c) < threshold){
       visible = false; 
       break;
     }

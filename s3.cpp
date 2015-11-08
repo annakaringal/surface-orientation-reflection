@@ -48,7 +48,7 @@ int main(int argc, const char * argv[]) {
     int step = atoi(argv[5]);
 
     // Read input directions file and store in surface normal map
-    SurfaceNormalMap snm(obj_images, input_dirs_fname, step, threshold);
+    SurfaceNormalMap snm(input_dirs_fname, obj_images, step, threshold);
 
 
     // Clean up and return

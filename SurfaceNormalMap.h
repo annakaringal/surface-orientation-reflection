@@ -35,6 +35,8 @@ private:
   void setLightSourcesFromFile(const char* fname);
 
   void generateGridPoints(int step, int threshold);
+
+  bool visibleInAllImages(int r, int c, int threshold);
 };
 
 #endif
