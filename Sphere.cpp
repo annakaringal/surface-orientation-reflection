@@ -88,3 +88,24 @@ SphereExtremes Sphere::calcSphereExtremeties(Image* labeled_img, int label){
   SphereExtremes se(max_x, max_y, min_x, min_y);
   return se;
 }
+
+pair<int, int> Sphere::findBrightestPixel(){
+  int max_val = 0, max_i = 0, max_j = 0;
+  int rows = img->getNRows();
+  int cols = img->getNCols();
+
+  // Scan all pixels
+  // Update vars if pixel is brighter than max_val
+  for (int i=0; i<rows; i++){
+    for (int j=0; j<cols; j++){
+      int cur = img->getPixel(i,j);
+      if (cur > max_val){
+        max_val = cur;
+        max_i = i; 
+        max_j = j;
+      }
+    }
+  }
+
+  return make_pair(max_i, max_j);
+}
