@@ -27,6 +27,7 @@ public:
     generateGridPoints(step, threshold);
   };
 
+
 private:
   vector<lightsource> light_sources;
   vector< pair<int, int> > grid_points;
@@ -37,6 +38,8 @@ private:
   void generateGridPoints(int step, int threshold);
 
   bool visibleInAllImages(int r, int c, int threshold);
+  
+  void drawGridPoints(Image* output_img);
 };
 
 #endif

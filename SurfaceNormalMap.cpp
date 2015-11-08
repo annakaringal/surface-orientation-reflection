@@ -70,4 +70,27 @@ bool SurfaceNormalMap::visibleInAllImages(int r, int c, int threshold){
   }
 
   return visible;
-}
+};
+
+void SurfaceNormalMap::drawGridPoints(Image* output_img){
+  int color=0;
+
+  // For each stored gridpoint
+  for (int i=0; i<grid_points.size(); i++){
+
+    // Color point black
+    int r = grid_points[i].first;
+    int c = grid_points[i].second;
+    output_img->setPixel(r,c,color);
+
+    // Draw 1px border around point for visibility
+    output_img->setPixel(r-1,c-1,color);
+    output_img->setPixel(r-1,c,color);
+    output_img->setPixel(r-1,c+1,color);
+    output_img->setPixel(r,c-1,color);
+    output_img->setPixel(r,c+1,color);
+    output_img->setPixel(r+1,c-1,color);
+    output_img->setPixel(r+1,c,color);
+    output_img->setPixel(r+1,c+1,color);
+  }
+};
