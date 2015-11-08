@@ -30,13 +30,16 @@ int main(int argc, const char * argv[]) {
       exit(-1);
     }
 
+    // Convert to binary
+    convertToBinary(input_img, binary_img, threshold);
 
-    if (writeImage(input_img, output_img_fname) < 0){
+    if (writeImage(binary_img, output_img_fname) < 0){
       cerr << "ERROR: Something went wrong writing the output image" << endl;
       exit(-1);
     }
 
     delete input_img;
+    delete binary_img;
 
     return 0;
 }
