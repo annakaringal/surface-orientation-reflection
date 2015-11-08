@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
     const char* input_dirs_fname = argv[1];
     const char* output_img_fname = argv[7];
     vector<const char*> sphere_fnames; 
-    for (int i=0; i < argc - 3; i++){
+    for (int i=0; i < sizeof(SPHERE_ARGS) / sizeof(int); i++){
         sphere_fnames.push_back(argv[SPHERE_ARGS[i]]);
     }
 
