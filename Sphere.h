@@ -39,6 +39,11 @@ public:
 
   int getRadius() { return radius; };
 
+  vector<int> findLightSource(){
+    pair<int, int> brightest = findBrightestPixel();
+    return findNormal(brightest.first, brightest.second);
+  }
+
 private:
   pair <float, float> center;
   int radius; 
@@ -50,6 +55,9 @@ private:
 
   SphereExtremes calcSphereExtremeties(Image* labeled_img, int label);
 
+  vector<int> findNormal(int i, int j);
+
+  pair <int, int> findBrightestPixel();
 };
 
 #endif
