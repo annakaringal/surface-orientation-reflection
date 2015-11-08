@@ -21,6 +21,16 @@ struct SphereExtremes {
   }
 };
 
+struct pixel { 
+  int x; 
+  int y;
+  int brightness;
+
+  pixel(int i=0, int j=0, int b=0) : x(i), y(j), brightness(b){}
+};
+
+vector<int> scaleVector(vector<int> vec, int factor);
+
 class Sphere{
 
 public:
@@ -57,7 +67,7 @@ private:
 
   vector<int> findNormal(int i, int j);
 
-  pair <int, int> findBrightestPixel();
+  pixel findBrightestPixel();
 };
 
 #endif

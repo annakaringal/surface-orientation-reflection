@@ -89,7 +89,7 @@ SphereExtremes Sphere::calcSphereExtremeties(Image* labeled_img, int label){
   return se;
 }
 
-pair<int, int> Sphere::findBrightestPixel(){
+pixel Sphere::findBrightestPixel(){
   int max_val = 0, max_i = 0, max_j = 0;
   int rows = img->getNRows();
   int cols = img->getNCols();
@@ -106,6 +106,7 @@ pair<int, int> Sphere::findBrightestPixel(){
       }
     }
   }
-
-  return make_pair(max_i, max_j);
+  pixel brightest(max_i, max_j, max_val);
+  return brightest;
 }
+
