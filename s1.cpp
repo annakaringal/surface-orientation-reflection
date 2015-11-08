@@ -11,7 +11,7 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    if (argc != 3) {
+    if (argc != 4) {
       cerr << "ERROR: Invalid number of arguments." << endl;
       exit(-1);
     }
