@@ -8,9 +8,9 @@
 #include <math.h>
 #include <cstdlib>
 
-#include "pgm/Image.h"
+#include "../pgm/Image.h"
 #include "Object.h"
-#include "Validation.h"
+#include "../Validation.h"
 
 #define AREA_TOLERANCE_PERCENTAGE 0.15
 #define ROUNDNESS_TOLERANCE_PERCENTAGE 0.15

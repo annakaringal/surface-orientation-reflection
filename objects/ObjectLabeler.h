@@ -5,7 +5,7 @@
 #include <vector>
 #include <set>
 
-#include "pgm/Image.h"
+#include "../pgm/Image.h"
 
 using namespace std;
 

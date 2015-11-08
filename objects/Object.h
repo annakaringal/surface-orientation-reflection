@@ -5,8 +5,8 @@
 #include <vector>
 #include <math.h>
 
-#include "pgm/Image.h"
-#include "Validation.h"
+#include "../pgm/Image.h"
+#include "../Validation.h"
 
 #define PI 3.14159265
 
