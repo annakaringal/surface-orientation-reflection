@@ -4,7 +4,7 @@
 
 #include "Validation.h"
 #include "pgm/Image.h"
-#include "Sphere.h"
+#include "SurfaceNormalMap.h"
 
 using namespace std;
 
@@ -47,6 +47,7 @@ int main(int argc, const char * argv[]) {
     }
     int step = atoi(argv[5]);
 
+    SurfaceNormalMap snm(input_dirs_fname);
 
     return 0;
 }

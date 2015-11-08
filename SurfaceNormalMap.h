@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 #include "pgm/Image.h"
 #include "Validation.h"
@@ -21,9 +22,14 @@ struct lightsource {
 class SurfaceNormalMap{
 
 public:
+  SurfaceNormalMap(const char* fname){
+    setLightSourcesFromFile(fname);
+  };
 
 private:
-
+  vector<lightsource> light_sources;
+ 
+  void setLightSourcesFromFile(const char* fname);
 };
 
 #endif
