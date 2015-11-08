@@ -54,9 +54,14 @@ int main(int argc, const char * argv[]) {
       exit(-1);
     }
 
-    // Write line attributes to file
+    // Write brightness vector of each sphere to file
     if (writef.is_open()) {
-       
+        for(int i=0; i < NUM_SPHERES; i++){
+            vector<int> ls = spheres[i]->findLightSource();
+            writef << ls[0] << " ";
+            writef << ls[1] << " ";
+            writef << ls[2] << endl;
+        }
     }
     writef.close();
 
