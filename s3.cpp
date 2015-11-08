@@ -50,6 +50,14 @@ int main(int argc, const char * argv[]) {
     // Read input directions file and store in surface normal map
     SurfaceNormalMap snm(input_dirs_fname, obj_images, step, threshold);
 
+    Image* output_img(obj_images[0]);
+
+    // Write output image to file
+    if (writeImage(output_img, output_img_fname) < 0){
+      cerr << "ERROR: Something went wrong writing the output image" << endl;
+      exit(-1);
+    }
+
 
     // Clean up and return
     for (int i=0; i < obj_images.size(); i++){
