@@ -24,6 +24,8 @@ class Sphere{
 
 public:
 
+  Sphere (pair<float, float> c, int r) : center(c), radius(r){};
+
   Sphere (Image* labeled_img, pair<float, float> c, int label=1) : center(c) { 
     radius = calcRadius(labeled_img, label);
   };
