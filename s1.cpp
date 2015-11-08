@@ -33,15 +33,19 @@ int main(int argc, const char * argv[]) {
     }
 
     // Convert to binary
+    Image* binary_img = new Image;
     convertToBinary(input_img, binary_img, threshold);
 
-    if (writeImage(binary_img, output_img_fname) < 0){
-      cerr << "ERROR: Something went wrong writing the output image" << endl;
-      exit(-1);
-    }
+    // Label objects in image
+    ObjectLabeler labeler;
+    Image* labeled_img = new Image;
+    labeler.labelObjects(binary_img, labeled_img);
+
+
 
     delete input_img;
     delete binary_img;
+    delete labeled_img;
 
     return 0;
 }
