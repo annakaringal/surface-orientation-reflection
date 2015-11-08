@@ -2,11 +2,15 @@
 
 int Sphere::calcRadius(Image* labeled_img, int label){ 
  
+  // calculate max & min rows & cols
   SphereExtremes se = calcSphereExtremeties(labeled_img, label);
 
-  int r;
+  // calculate horizontal & vertical diameters
+  int vert_diff = se.max_x - se.min_x; 
+  int hor_diff = se.max_y - se.min_y; 
 
-  return r;
+  // return half of average of diameters (i.e. avg radius)
+  return (vert_diff + hor_diff) / 4;
 }
 
 SphereExtremes Sphere::calcSphereExtremeties(Image* labeled_img, int label){
