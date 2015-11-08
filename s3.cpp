@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int SPHERE_ARGS[] = {2,3,4};
+int OBJ_ARGS[] = {2,3,4};
 
 int main(int argc, const char * argv[]) {
     if (argc != 8) {
@@ -18,20 +18,20 @@ int main(int argc, const char * argv[]) {
 
     const char* input_dirs_fname = argv[1];
     const char* output_img_fname = argv[7];
-    vector<const char*> sphere_fnames; 
-    for (int i=0; i < sizeof(SPHERE_ARGS) / sizeof(int); i++){
-        sphere_fnames.push_back(argv[SPHERE_ARGS[i]]);
+    vector<const char*> obj_fnames; 
+    for (int i=0; i < sizeof(OBJ_ARGS) / sizeof(int); i++){
+        obj_fnames.push_back(argv[OBJ_ARGS[i]]);
     }
 
     // Create new sphere images from files, add to vector
-    vector<Image*> sphere_images;
-    for(int i=0; i < sphere_fnames.size(); i++){
+    vector<Image*> obj_images;
+    for(int i=0; i < obj_fnames.size(); i++){
         Image* img = new Image;
-        if (readImage(img, sphere_fnames[i]) < 0) {
+        if (readImage(img, obj_fnames[i]) < 0) {
           cerr << "ERROR: Something went wrong reading the input image" << endl;
           exit(-1);
         }
-        sphere_images.push_back(img);
+        obj_images.push_back(img);
     }
 
     // Check if step & threshold are valid ints and set to variables
