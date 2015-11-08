@@ -10,6 +10,16 @@
 
 using namespace std;
 
+struct SphereExtremes { 
+  int maxX;
+  int maxY;
+  int minX; 
+  int minY;
+
+  SphereExtremes(int lx=0, int ly=0, int sx=0, int sy=0) : maxX(lx), maxY(ly), minX(sx), minY(sy){ 
+  }
+};
+
 class Sphere{
 
 public:
