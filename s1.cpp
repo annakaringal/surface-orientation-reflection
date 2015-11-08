@@ -6,6 +6,7 @@
 #include "pgm/Image.h"
 #include "objects/Object.h"
 #include "objects/ObjectLabeler.h"
+#include "objects/ImageObjectDatabase.h"
 
 using namespace std;
 
@@ -41,11 +42,17 @@ int main(int argc, const char * argv[]) {
     Image* labeled_img = new Image;
     labeler.labelObjects(binary_img, labeled_img);
 
-    pair <float, float> center = 
+    // Generate database for image objects and calculate center
+    ImageObjectDatabase iodb(labeled_img);
+    pair <float, float> center = iodb->getObject()->calculateCenter();
+
+    cout << center.first << " " << center.second << endl;
+
 
     delete input_img;
     delete binary_img;
     delete labeled_img;
+    delete iodb;
 
     return 0;
 }
