@@ -50,8 +50,9 @@ public:
   int getRadius() { return radius; };
 
   vector<int> findLightSource(){
-    pair<int, int> brightest = findBrightestPixel();
-    return findNormal(brightest.first, brightest.second);
+    pixel b = findBrightestPixel();
+    vector<int> normal = findNormal(b.x, b.y);
+    return scaleVector(normal, b.brightness);
   }
 
 private:

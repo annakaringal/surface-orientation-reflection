@@ -1,5 +1,13 @@
 #include "Sphere.h"
 
+vector<int> scaleVector(vector<int> vec, int factor) { 
+  vector<int> scaled;
+  for (int i=0; i<vec.size(); i++){
+    scaled.push_back(vec[i] * factor);
+  }
+  return scaled;
+}
+
 void Sphere::setParamsFromFile(const char* params_fname){
   // Open file
   ifstream readf; 
