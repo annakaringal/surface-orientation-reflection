@@ -124,11 +124,11 @@ vector<int> Sphere::findNormal(int i, int j){
   normal.push_back(j);
 
   // Calculate z coordinate of normal
-  // Assume unit sphere
+  // Assume center of sphere lies at coordinate 0
   int diff_x_sq = (i - center.first) * (i - center.first);
   int diff_y_sq = (j - center.second) * (j - center.second);
   int r_sq = radius * radius;
-  normal.push_back(sqrt(abs(diff_x_sq + diff_y_sq - r_sq))+1);
+  normal.push_back(sqrt(abs(diff_x_sq + diff_y_sq - r_sq)));
 
   return normal;
 }
