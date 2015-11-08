@@ -1,5 +1,44 @@
 #include "Sphere.h"
 
+void Sphere::setParamsFromFile(const char* params_fname){
+  // Open file
+  ifstream readf; 
+  readf.open(params_fname);
+  if (readf.fail()) {
+      cerr << "ERROR: Something went wrong reading the parameters file." << endl;
+      exit(-1);
+  }
+
+  // Get params line from file
+  string params;
+  vector<string> param_strings; 
+  if (readf.is_open()){
+      getline(readf, params);
+  }
+  readf.close();
+
+  // Parse params line and set center & radius
+  istringstream pss(params);
+  for(int i=0; i<3; i++){
+      char* p;    
+      pss.getline(p,256,' ');
+
+      if (!isValidType<int, char*>(p)){
+        cerr << "ERROR: Parameter must be an integer." << endl;
+        exit(-1);
+      }
+      int p_int = atoi(p);
+
+      if (i==0){
+          center.first = p_int;
+      } else if (i == 1){
+          center.second = p_int;
+      } else {
+          radius = p_int;
+      }
+  }
+}
+
 int Sphere::calcRadius(Image* labeled_img, int label){ 
  
   // calculate max & min rows & cols
