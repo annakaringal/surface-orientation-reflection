@@ -13,20 +13,13 @@
 using namespace std;
 
 struct SphereExtremes { 
-  int max_x;
-  int max_y;
-  int min_x; 
-  int min_y;
-
+  int max_x, max_y, min_x, min_y;
   SphereExtremes(int lx=0, int ly=0, int sx=0, int sy=0) : max_x(lx), max_y(ly), min_x(sx), min_y(sy){ 
   }
 };
 
 struct pixel { 
-  int x; 
-  int y;
-  int brightness;
-
+  int x, y, brightness;
   pixel(int i=0, int j=0, int b=0) : x(i), y(j), brightness(b){}
 };
 

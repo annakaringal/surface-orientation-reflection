@@ -12,10 +12,7 @@
 using namespace std;
 
 struct lightsource { 
-  int x; 
-  int y; 
-  int z;
-
+  int x, y, z;
   lightsource(int i=0, int j=0, int k=0) : x(i), y(j), z(k){}
 };
 
