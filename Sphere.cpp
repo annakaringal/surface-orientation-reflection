@@ -1,6 +1,53 @@
 #include "Sphere.h"
 
-int Sphere::calcRadius(Image* labeled_img, int label){ 
+vector<int> scaleVector(vector<int> vec, int factor) { 
+  vector<int> scaled;
+  for (int i=0; i<vec.size(); i++){
+    scaled.push_back(vec[i] * factor);
+  }
+  return scaled;
+}
+
+void Sphere::setParamsFromFile(const char* params_fname){
+  // Open file
+  ifstream readf; 
+  readf.open(params_fname);
+  if (readf.fail()) {
+      cerr << "ERROR: Something went wrong reading the parameters file." << endl;
+      exit(-1);
+  }
+
+  // Get params line from file
+  string params;
+  vector<string> param_strings; 
+  if (readf.is_open()){
+      getline(readf, params);
+  }
+  readf.close();
+
+  // Parse params line and set center & radius
+  istringstream pss(params);
+  for(int i=0; i<3; i++){
+      string p;    
+      getline(pss, p,' ');
+
+      if (!isValidType<int, string>(p)){
+        cerr << "ERROR: Parameter must be an integer." << endl;
+        exit(-1);
+      }
+      int p_int = atoi(p.c_str());
+
+      if (i==0){
+          center.first = p_int;
+      } else if (i == 1){
+          center.second = p_int;
+      } else {
+          radius = p_int;
+      }
+  }
+}
+
+float Sphere::calcRadius(Image* labeled_img, int label){ 
  
   // calculate max & min rows & cols
   SphereExtremes se = calcSphereExtremeties(labeled_img, label);
@@ -48,4 +95,40 @@ SphereExtremes Sphere::calcSphereExtremeties(Image* labeled_img, int label){
   // Create new SphereExtremes struct and return
   SphereExtremes se(max_x, max_y, min_x, min_y);
   return se;
+}
+
+pixel Sphere::findBrightestPixel(){
+  int max_val = 0, max_i = 0, max_j = 0;
+  int rows = img->getNRows();
+  int cols = img->getNCols();
+
+  // Scan all pixels
+  // Update vars if pixel is brighter than max_val
+  for (int i=0; i<rows; i++){
+    for (int j=0; j<cols; j++){
+      int cur = img->getPixel(i,j);
+      if (cur > max_val){
+        max_val = cur;
+        max_i = i; 
+        max_j = j;
+      }
+    }
+  }
+  pixel brightest(max_i, max_j, max_val);
+  return brightest;
+}
+
+vector<int> Sphere::findNormal(int i, int j){
+  vector<int> normal; 
+  normal.push_back(i);
+  normal.push_back(j);
+
+  // Calculate z coordinate of normal
+  // Assume center of sphere lies at coordinate 0
+  int diff_x_sq = (i - center.first) * (i - center.first);
+  int diff_y_sq = (j - center.second) * (j - center.second);
+  int r_sq = radius * radius;
+  normal.push_back(sqrt(abs(diff_x_sq + diff_y_sq - r_sq)));
+
+  return normal;
 }

@@ -6,8 +6,14 @@ all: s1
 s1: s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o Validation.o Image.o Pgm.o
 	$(CC) s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o Validation.o Image.o Pgm.o -o s1
 
+s2: s2.o Sphere.o Validation.o Image.o Pgm.o
+	$(CC) s2.o Sphere.o Validation.o Image.o Pgm.o -o s2
+
 s1.o: s1.cpp
 	$(CC) -c s1.cpp
+
+s2.o: s2.cpp
+	$(CC) -c s2.cpp
 
 BinaryImage.o: BinaryImage.cpp
 	$(CC) -c BinaryImage.cpp
@@ -37,4 +43,4 @@ Line.o: pgm/Line.cpp
 	$(CC) -c pgm/Line.cpp
 
 clean:
-	rm *o s1
+	rm *o s1 s2
