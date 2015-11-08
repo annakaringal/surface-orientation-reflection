@@ -28,14 +28,14 @@ void Sphere::setParamsFromFile(const char* params_fname){
   // Parse params line and set center & radius
   istringstream pss(params);
   for(int i=0; i<3; i++){
-      char* p;    
-      pss.getline(p,256,' ');
+      string p;    
+      getline(pss, p,' ');
 
-      if (!isValidType<int, char*>(p)){
+      if (!isValidType<int, string>(p)){
         cerr << "ERROR: Parameter must be an integer." << endl;
         exit(-1);
       }
-      int p_int = atoi(p);
+      int p_int = atoi(p.c_str());
 
       if (i==0){
           center.first = p_int;
