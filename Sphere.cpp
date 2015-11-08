@@ -47,7 +47,7 @@ void Sphere::setParamsFromFile(const char* params_fname){
   }
 }
 
-int Sphere::calcRadius(Image* labeled_img, int label){ 
+float Sphere::calcRadius(Image* labeled_img, int label){ 
  
   // calculate max & min rows & cols
   SphereExtremes se = calcSphereExtremeties(labeled_img, label);

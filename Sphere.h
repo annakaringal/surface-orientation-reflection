@@ -36,11 +36,14 @@ class Sphere{
 
 public:
 
-  Sphere (Image* si, const char* params_fname) : image(si) { 
+  Sphere (Image* si, const char* params_fname) { 
     setParamsFromFile(params_fname);
+    img = si;
   }
 
-  Sphere (Image* si, pair<float, float> c, int r) : image(si), center(c), radius(r){};
+  Sphere (Image* si, pair<float, float> c, float r) : center(c), radius(r){
+    img = si;
+    };
 
   Sphere (Image* labeled_img, pair<float, float> c, int label=1) : center(c) { 
     radius = calcRadius(labeled_img, label);
@@ -48,7 +51,7 @@ public:
 
   pair <float, float> getCenter() { return center; };
 
-  int getRadius() { return radius; };
+  float getRadius() { return radius; };
 
   vector<int> findLightSource(){
     pixel b = findBrightestPixel();
@@ -58,12 +61,12 @@ public:
 
 private:
   pair <float, float> center;
-  int radius; 
+  float radius; 
   Image* img;
 
   void setParamsFromFile(const char* params_fname);
 
-  int calcRadius(Image* labeled_img, int label);
+  float calcRadius(Image* labeled_img, int label);
 
   SphereExtremes calcSphereExtremeties(Image* labeled_img, int label);
 
