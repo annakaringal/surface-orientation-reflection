@@ -11,12 +11,12 @@
 using namespace std;
 
 struct SphereExtremes { 
-  int maxX;
-  int maxY;
-  int minX; 
-  int minY;
+  int max_x;
+  int max_y;
+  int min_x; 
+  int min_y;
 
-  SphereExtremes(int lx=0, int ly=0, int sx=0, int sy=0) : maxX(lx), maxY(ly), minX(sx), minY(sy){ 
+  SphereExtremes(int lx=0, int ly=0, int sx=0, int sy=0) : max_x(lx), max_y(ly), min_x(sx), min_y(sy){ 
   }
 };
 

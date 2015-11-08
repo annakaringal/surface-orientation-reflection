@@ -10,8 +10,8 @@ int Sphere::calcRadius(Image* labeled_img, int label){
 }
 
 SphereExtremes Sphere::calcSphereExtremeties(Image* labeled_img, int label){
-  int minX=0, minY=0, maxX=0, maxY=0;
-  bool minXfound = false, minYfound = false;
+  int min_x=0, min_y=0, max_x=0, max_y=0;
+  bool min_x_found = false, min_y_found = false;
 
   // Scan each pixel
   int rows = labeled_img->getNRows();
@@ -22,28 +22,28 @@ SphereExtremes Sphere::calcSphereExtremeties(Image* labeled_img, int label){
       // look only at correctly labeled pixels
       if (labeled_img->getPixel(i,j) == label){
 
-        // set minX and minY to coords of first labeled pixel
-        if (!minXfound){ 
-          minXfound = true;
-          minX = i;
+        // set min_x and min_y to coords of first labeled pixel
+        if (!min_x_found){ 
+          min_x_found = true;
+          min_x = i;
         }
-        if (!minYfound){ 
-          minYfound = true;
-          minY = j;
+        if (!min_y_found){ 
+          min_y_found = true;
+          min_y = j;
         }
 
-        // update minY if labels are found in lower cols
-        if (minY > j){ minY = j; }
+        // update min_y if labels are found in lower cols
+        if (min_y > j){ min_y = j; }
 
         // update maxs as labels are found in higher rows or cols
-        if (maxX < i){ maxX = i; }
-        if (maxY < j){ maxY = j; }
+        if (max_x < i){ max_x = i; }
+        if (max_y < j){ max_y = j; }
 
       }
     } 
   }
 
   // Create new SphereExtremes struct and return
-  SphereExtremes se(maxX, maxY, minX, minY);
+  SphereExtremes se(max_x, max_y, min_x, min_y);
   return se;
 }
