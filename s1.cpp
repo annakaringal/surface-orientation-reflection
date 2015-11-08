@@ -44,15 +44,13 @@ int main(int argc, const char * argv[]) {
 
     // Generate database for image objects and calculate center
     ImageObjectDatabase iodb(labeled_img);
-    pair <float, float> center = iodb->getObject()->calculateCenter();
+    pair <float, float> center = iodb.getObject(1)->calculateCenter();
 
     cout << center.first << " " << center.second << endl;
-
 
     delete input_img;
     delete binary_img;
     delete labeled_img;
-    delete iodb;
 
     return 0;
 }
