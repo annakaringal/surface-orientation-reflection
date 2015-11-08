@@ -1,7 +1,7 @@
 CC = g++
 VERS = -std=c++11
 
-all: s1
+all: s1 s2 s3
 
 s1: s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o Validation.o Image.o Pgm.o
 	$(CC) s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o Validation.o Image.o Pgm.o -o s1
@@ -9,11 +9,17 @@ s1: s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o V
 s2: s2.o Sphere.o Validation.o Image.o Pgm.o
 	$(CC) s2.o Sphere.o Validation.o Image.o Pgm.o -o s2
 
+s3: s3.o SurfaceNormalMap.o Validation.o Image.o Pgm.o
+	$(CC) s3.o SurfaceNormalMap.o Validation.o Image.o Pgm.o -o s3
+
 s1.o: s1.cpp
 	$(CC) -c s1.cpp
 
 s2.o: s2.cpp
 	$(CC) -c s2.cpp
+
+s3.o: s3.cpp
+	$(CC) -c s3.cpp
 
 BinaryImage.o: BinaryImage.cpp
 	$(CC) -c BinaryImage.cpp
@@ -33,6 +39,9 @@ Validation.o: Validation.cpp
 Sphere.o: Sphere.cpp
 	$(CC) -c Sphere.cpp
 
+SurfaceNormalMap.o: SurfaceNormalMap.cpp
+	$(CC) -c SurfaceNormalMap.cpp
+
 Image.o: pgm/Image.cpp
 	$(CC) -c pgm/Image.cpp
 
@@ -43,4 +52,4 @@ Line.o: pgm/Line.cpp
 	$(CC) -c pgm/Line.cpp
 
 clean:
-	rm *o s1 s2
+	rm *o s1 s2 s3
