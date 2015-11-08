@@ -4,6 +4,8 @@
 #include "BinaryImage.h"
 #include "pgm/Image.h"
 #include "Validation.h"
+#include "Object.h"
+#include "ObjectLabeler.h"
 
 using namespace std;
 
