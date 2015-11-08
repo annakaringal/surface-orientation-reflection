@@ -43,3 +43,31 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
   readf.close();
 
 };
+
+void SurfaceNormalMap::generateGridPoints(int step, int threshold){
+
+  int rows = images[0]->getNRows();
+  int cols = images[0]->getNCols();
+
+  for (int i=0; i<rows; i += step){
+    for (int j=0; j<cols; j += step){
+      if (visibleInAllImages(i,j,threshold)){
+        grid_points.push_back(make_pair(i,j));
+      }
+    }
+  }
+
+};
+
+bool SurfaceNormalMap::visibleInAllImages(int r, int c, int threshold){
+  bool visible = true;
+
+  for(int i=0;i<images.size();i++){
+    if (images[i]->getPixel(i,j) < threshold){
+      visible = false; 
+      break;
+    }
+  }
+
+  return visible;
+}

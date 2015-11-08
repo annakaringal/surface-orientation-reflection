@@ -22,14 +22,19 @@ struct lightsource {
 class SurfaceNormalMap{
 
 public:
-  SurfaceNormalMap(const char* fname){
-    setLightSourcesFromFile(fname);
+  SurfaceNormalMap(const char* dirs_fname, vector<Image*> obj_imgs, int step, int threshold) : images(obj_imgs) {
+    setLightSourcesFromFile(dirs_fname);
+    generateGridPoints(step, threshold);
   };
 
 private:
   vector<lightsource> light_sources;
- 
+  vector< pair<int, int> > grid_points;
+  vector<Image*> images;
+
   void setLightSourcesFromFile(const char* fname);
+
+  void generateGridPoints(int step, int threshold);
 };
 
 #endif
