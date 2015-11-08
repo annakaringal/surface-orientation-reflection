@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 
 #include "BinaryImage.h"
@@ -18,7 +19,7 @@ int main(int argc, const char * argv[]) {
     }
 
     const char* input_img_fname = argv[1];
-    const char* output_img_fname = argv[3];
+    const char* output_fname = argv[3];
 
     // Check if threshold is valid int and set to variable
     if (!isValidType<int, const char*>(argv[2])){
@@ -47,6 +48,22 @@ int main(int argc, const char * argv[]) {
     // create new sphere with labeled image and center
     pair <float, float> center = iodb.getObject(1)->calculateCenter();
     Sphere s(labeled_img, center);
+
+    // Open output file
+    ofstream writef;
+    writef.open(output_fname);
+    if (writef.fail()) {
+        cerr << "ERROR: Something went wrong reading the output file" << endl;
+      exit(-1);
+    }
+
+    // Write sphere attributes to file
+    if (writef.is_open()) {
+        writef << center.first << " ";
+        writef << center.second<< " ";
+        writef << s.getRadius() << "\n";
+    }
+    writef.close();
 
     delete input_img;
     delete binary_img;
