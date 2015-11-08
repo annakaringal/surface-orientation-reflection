@@ -50,7 +50,9 @@ int main(int argc, const char * argv[]) {
     // Read input directions file and store in surface normal map
     SurfaceNormalMap snm(input_dirs_fname, obj_images, step, threshold);
 
+    // Create copy of first image and draw normals map
     Image* output_img(obj_images[0]);
+    snm.drawMap(output_img);
 
     // Write output image to file
     if (writeImage(output_img, output_img_fname) < 0){

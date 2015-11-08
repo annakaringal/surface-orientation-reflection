@@ -27,6 +27,11 @@ public:
     generateGridPoints(step, threshold);
   };
 
+  void drawMap(Image* output_img){
+    drawGridPoints(output_img);
+    calculateNormals();
+    drawNormals(output_img);
+  }
 
 private:
   vector<lightsource> light_sources;
@@ -38,8 +43,12 @@ private:
   void generateGridPoints(int step, int threshold);
 
   bool visibleInAllImages(int r, int c, int threshold);
-  
+
   void drawGridPoints(Image* output_img);
+
+  void calculateNormals();
+
+  void drawNormals(Image* output_img);
 };
 
 #endif
