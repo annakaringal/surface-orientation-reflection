@@ -25,11 +25,11 @@ class Sphere{
 
 public:
 
-  Sphere (const char* params_fname){ 
+  Sphere (Image* si, const char* params_fname) : image(si) { 
     setParamsFromFile(params_fname);
   }
 
-  Sphere (pair<float, float> c, int r) : center(c), radius(r){};
+  Sphere (Image* si, pair<float, float> c, int r) : image(si), center(c), radius(r){};
 
   Sphere (Image* labeled_img, pair<float, float> c, int label=1) : center(c) { 
     radius = calcRadius(labeled_img, label);
@@ -42,6 +42,7 @@ public:
 private:
   pair <float, float> center;
   int radius; 
+  Image* img;
 
   void setParamsFromFile(const char* params_fname);
 

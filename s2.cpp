@@ -36,13 +36,13 @@ int main(int argc, const char * argv[]) {
     }
 
     // Create first sphere from params file and add to vector
-    Sphere* sphere_from_file = new Sphere(input_params_fname);
+    Sphere* sphere_from_file = new Sphere(sphere_images[0], input_params_fname);
     vector<Sphere*> spheres;
     spheres.push_back(sphere_from_file);
 
     // Create remaining spheres, add to vector
-    for(int i=0; i < NUM_SPHERES-1; i++){
-        Sphere* s = new Sphere(sphere_from_file->getCenter(), sphere_from_file->getRadius());
+    for(int i=1; i < NUM_SPHERES; i++){
+        Sphere* s = new Sphere(sphere_images[i], sphere_from_file->getCenter(), sphere_from_file->getRadius());
         spheres.push_back(s);
     }
 
