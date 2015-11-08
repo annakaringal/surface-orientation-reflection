@@ -28,5 +28,10 @@ private:
   pair <float, float> center;
   int radius; 
 
+  int calcRadius(Image* labeled_img, int label);
+
+  SphereExtremes calcSphereExtremeties(Image* labeled_img, int label);
+
+};
 
 #endif
