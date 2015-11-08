@@ -2,10 +2,10 @@
 #include <cstdlib>
 
 #include "BinaryImage.h"
-#include "pgm/Image.h"
 #include "Validation.h"
-#include "Object.h"
-#include "ObjectLabeler.h"
+#include "pgm/Image.h"
+#include "objects/Object.h"
+#include "objects/ObjectLabeler.h"
 
 using namespace std;
 
@@ -41,7 +41,7 @@ int main(int argc, const char * argv[]) {
     Image* labeled_img = new Image;
     labeler.labelObjects(binary_img, labeled_img);
 
-
+    pair <float, float> center = 
 
     delete input_img;
     delete binary_img;
