@@ -1,9 +1,19 @@
 #include "Sphere.h"
 
-vector<int> scaleVector(vector<int> vec, int factor) { 
+vector<int> scaleVectorToLength(vector<int> vec, int length) { 
+  // Calculate magnitude to get scale factor
+  float magnitude = 0; 
+  for (int i=0; i<vec.size(); i++){
+    magnitude += vec[i] * vec[i];
+  }
+  magnitude = sqrt(magnitude);
+  float scale_factor = float(length) / magnitude;
+
+  // scale vector & make copy
   vector<int> scaled;
   for (int i=0; i<vec.size(); i++){
-    scaled.push_back(vec[i] * factor);
+    float unit = float(vec[i]) / float(magnitude);
+    scaled.push_back(unit * length);
   }
   return scaled;
 }

@@ -23,7 +23,7 @@ struct pixel {
   pixel(int i=0, int j=0, int b=0) : x(i), y(j), brightness(b){}
 };
 
-vector<int> scaleVector(vector<int> vec, int factor);
+vector<int> scaleVectorToLength(vector<int> vec, int length);
 
 class Sphere{
 
@@ -36,7 +36,7 @@ public:
 
   Sphere (Image* si, pair<float, float> c, float r) : center(c), radius(r){
     img = si;
-    };
+  };
 
   Sphere (Image* labeled_img, pair<float, float> c, int label=1) : center(c) { 
     radius = calcRadius(labeled_img, label);
@@ -49,7 +49,7 @@ public:
   vector<int> findLightSource(){
     pixel b = findBrightestPixel();
     vector<int> normal = findNormal(b.x, b.y);
-    return scaleVector(normal, b.brightness);
+    return scaleVectorToLength(normal, b.brightness);
   }
 
 private:
