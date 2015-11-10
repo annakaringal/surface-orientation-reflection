@@ -28,7 +28,7 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
       // For each line in file
       while(getline(readf, params)){
         // Split up line into different vars & save as new lightsource  to vector
-        lightsource ls;
+        3dVec ls;
         istringstream pss(params);
         for(int i=0; i<3; i++){
             string p;    
@@ -41,11 +41,11 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
             int p_int = atoi(p.c_str());
 
             if (i==0){
-                ls.x = p_int;
+                ls.setX(p_int);
             } else if (i == 1){
-                ls.y = p_int;
+                ls.setY(p_int);
             } else {
-                ls.z = p_int;
+                ls.setZ(p_int);
             }
         }
         light_sources.push_back(ls);

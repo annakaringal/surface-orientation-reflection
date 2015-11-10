@@ -9,6 +9,7 @@
 
 #include "pgm/Image.h"
 #include "Validation.h"
+#include "3dVec.h"
 
 using namespace std;
 
@@ -22,8 +23,6 @@ struct pixel {
   int x, y, brightness;
   pixel(int i=0, int j=0, int b=0) : x(i), y(j), brightness(b){}
 };
-
-vector<int> scaleVectorToLength(vector<int> vec, int length);
 
 class Sphere{
 
@@ -46,10 +45,11 @@ public:
 
   float getRadius() { return radius; };
 
-  vector<int> findLightSource(){
+  3dVec findLightSource(){
     pixel b = findBrightestPixel();
-    vector<int> normal = findNormal(b.x, b.y);
-    return scaleVectorToLength(normal, b.brightness);
+    3dVec normal = findNormal(b.x, b.y);
+    normal.scaleVectorToLength(b.brightness);
+    return normal;
   }
 
 private:
@@ -63,7 +63,7 @@ private:
 
   SphereExtremes calcSphereExtremeties(Image* labeled_img, int label);
 
-  vector<int> findNormal(int i, int j);
+  3dVec findNormal(int i, int j);
 
   pixel findBrightestPixel();
 };

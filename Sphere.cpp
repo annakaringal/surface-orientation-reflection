@@ -1,23 +1,5 @@
 #include "Sphere.h"
 
-vector<int> scaleVectorToLength(vector<int> vec, int length) { 
-  // Calculate magnitude to get scale factor
-  float magnitude = 0; 
-  for (int i=0; i<vec.size(); i++){
-    magnitude += vec[i] * vec[i];
-  }
-  magnitude = sqrt(magnitude);
-  float scale_factor = float(length) / magnitude;
-
-  // scale vector & make copy
-  vector<int> scaled;
-  for (int i=0; i<vec.size(); i++){
-    float unit = float(vec[i]) / float(magnitude);
-    scaled.push_back(unit * length);
-  }
-  return scaled;
-}
-
 void Sphere::setParamsFromFile(const char* params_fname){
   // Open file
   ifstream readf; 
@@ -128,7 +110,7 @@ pixel Sphere::findBrightestPixel(){
   return brightest;
 }
 
-vector<int> Sphere::findNormal(int i, int j){
+3dVec Sphere::findNormal(int i, int j){
   // Calculate x-x0 and y-y0
   int dx = i-center.first;
   int dy = j-center.second;
@@ -137,9 +119,6 @@ vector<int> Sphere::findNormal(int i, int j){
   int dz = sqrt(abs((dx * dx) + (dy * dy) - int(radius*radius)));
 
   // Vector is x-x0, y-y0, z-z0
-  vector<int> normal; 
-  normal.push_back(dx);
-  normal.push_back(dy);
-  normal.push_back(dz);
+  3dVec normal(dx, dy, dz); 
   return normal;
 }

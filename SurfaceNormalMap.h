@@ -8,13 +8,9 @@
 
 #include "pgm/Image.h"
 #include "Validation.h"
+#include "3dVec.h"
 
 using namespace std;
-
-struct lightsource { 
-  int x, y, z;
-  lightsource(int i=0, int j=0, int k=0) : x(i), y(j), z(k){}
-};
 
 void drawBorder(Image* img, int r, int c, int color);
 
@@ -28,12 +24,11 @@ public:
 
   void drawMap(Image* output_img){
     drawGridPoints(output_img);
-    calculateNormals();
-    drawNormals(output_img);
+    calcAndDrawNormals(output_img);
   }
 
 private:
-  vector<lightsource> light_sources;
+  vector<3dVec> light_sources;
   vector< pair<int, int> > grid_points;
   vector<Image*> images;
 
@@ -45,9 +40,11 @@ private:
 
   void drawGridPoints(Image* output_img);
 
-  void calculateNormals();
+  void calcAndDrawNormals(Image* output_img);
 
-  void drawNormals(Image* output_img);
+  3dVec calcNormal(int r, int c);
+
+  void drawNormal(3dVec normal, Image* output_img);
 };
 
 #endif
