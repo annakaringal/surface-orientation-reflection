@@ -129,13 +129,14 @@ pixel Sphere::findBrightestPixel(){
 }
 
 vector<int> Sphere::findNormal(int i, int j){
+  // Calculate x-x0 and y-y0
   int dx = i-center.first;
   int dy = j-center.second;
 
-  // Calculate z coordinate of normal
-  // Assume center of sphere lies at z-coordinate 0
+  // Calculate z - z0 
   int dz = sqrt(abs((dx * dx) + (dy * dy) - int(radius*radius)));
 
+  // Vector is x-x0, y-y0, z-z0
   vector<int> normal; 
   normal.push_back(dx);
   normal.push_back(dy);
