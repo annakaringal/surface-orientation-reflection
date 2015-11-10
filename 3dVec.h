@@ -2,6 +2,7 @@
 #define 3D_VEC
 
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -32,5 +33,9 @@ private:
 
   void scaleVecLength(int length);
 };
+
+vector <3dVec> invert(vector<3dVec> 3x3_vec);
+
+int matrixProduct(int r, vector<3dVec> 3x3_vec, 3dVec 3x1_vec);
 
 #endif
