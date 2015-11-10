@@ -98,3 +98,32 @@ void SurfaceNormalMap::drawGridPoints(Image* output_img){
     drawBorder(output_img, r, c, color);
   }
 };
+
+void SurfaceNormalMap::calcAndDrawNormals(){
+  for (int i=0; i<grid_points.size(); i++){
+    3dvec n = calcNormal(grid_points[i].first, grid_points[i].second);
+    drawNormal(n, output_img);
+  }
+}
+
+3dVec SurfaceNormalMap::calcNormal(int r, int c){
+  // Get brightness for each of the 3 images in images
+  3dVec intensities(images[0]->getPixel(r,c), 
+                    images[1]->getPixel(r,c), 
+                    images[2]->getPixel(r,c));
+
+  // Find inverse of normals to light sources
+  vector <3dVec> light_sources_inverse = invert(light_sources);
+
+  // Multiply lighht_source_inverse by intensities
+  3dVec N(matrixProduct(0, 0, light_sources_inverse, N),
+          matrixProduct(0, 1, light_sources_inverse, N),
+          matrixProduct(0, 2, light_sources_inverse, N));
+
+  // divide by magnitude to get orientation of normal
+  float magnitude = N.magnitude();
+  3dVec normal(N.get(X) / magnitude,
+               N.get(Y) / magnitude,
+               N.get(Z) / magnitude);
+  return normal;
+}
