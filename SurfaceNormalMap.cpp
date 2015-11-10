@@ -1,5 +1,16 @@
 #include "SurfaceNormalMap.h"
 
+void drawBorder(Image* img, int r, int c, int color){ 
+  img->setPixel(r-1,c-1,color);
+  img->setPixel(r-1,c,color);
+  img->setPixel(r-1,c+1,color);
+  img->setPixel(r,c-1,color);
+  img->setPixel(r,c+1,color);
+  img->setPixel(r+1,c-1,color);
+  img->setPixel(r+1,c,color);
+  img->setPixel(r+1,c+1,color);
+}
+
 void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
   // Open file
   ifstream readf; 
@@ -84,13 +95,6 @@ void SurfaceNormalMap::drawGridPoints(Image* output_img){
     output_img->setPixel(r,c,color);
 
     // Draw 1px border around point for visibility
-    output_img->setPixel(r-1,c-1,color);
-    output_img->setPixel(r-1,c,color);
-    output_img->setPixel(r-1,c+1,color);
-    output_img->setPixel(r,c-1,color);
-    output_img->setPixel(r,c+1,color);
-    output_img->setPixel(r+1,c-1,color);
-    output_img->setPixel(r+1,c,color);
-    output_img->setPixel(r+1,c+1,color);
+    drawBorder(output_img, r, c, color);
   }
 };

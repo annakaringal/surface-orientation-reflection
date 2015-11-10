@@ -16,6 +16,8 @@ struct lightsource {
   lightsource(int i=0, int j=0, int k=0) : x(i), y(j), z(k){}
 };
 
+void drawBorder(Image* img, int r, int c, int color);
+
 class SurfaceNormalMap{
 
 public:
