@@ -9,8 +9,8 @@ s1: s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o V
 s2: s2.o Sphere.o Validation.o 3dVec.o Image.o Pgm.o
 	$(CC) s2.o Sphere.o Validation.o 3dVec.o Image.o Pgm.o -o s2
 
-s3: s3.o SurfaceNormalMap.o Validation.o 3dVec.o Image.o Pgm.o
-	$(CC) s3.o SurfaceNormalMap.o Validation.o 3dVec.o Image.o Pgm.o -o s3
+s3: s3.o SurfaceNormalMap.o Validation.o 3dVec.o Image.o Pgm.o Line.o
+	$(CC) s3.o SurfaceNormalMap.o Validation.o 3dVec.o Image.o Pgm.o Line.o -o s3
 
 s1.o: s1.cpp
 	$(CC) -c s1.cpp
