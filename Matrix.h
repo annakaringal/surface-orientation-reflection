@@ -21,24 +21,24 @@ public:
     }
   };
 
-  Matrix(Matrix &m){
-    int rows = m.rows();
-    int cols = m.cols();
+  Matrix(const Matrix &m){
+    int rows = m.getRows();
+    int cols = m.getCols();
 
     for (int i=0; i<rows; i++){
       vector<int> row;
       for (int j=0; j<cols; j++){
-        row.push_back(m.getVal(i,j));
+        row.push_back(m.getValue(i,j));
       }
       matrix.push_back(row);
     }
   }
 
-  int rows(){ return getRows(); };
+  int getRows() const { return getNRows(); };
 
-  int cols(){ return getCols(); };
+  int getCols() const { return getNCols(); };
 
-  int getValue(int r, int c) { return getVal(r,c); };
+  int getValue(int r, int c) const { return getVal(r,c); };
 
   void setValue(int r, int c, int v) { setVal(r,c,v); };
 
@@ -57,13 +57,13 @@ private:
 
   vector < vector<int> > matrix;
 
-  int getVal(int r, int c);
+  int getVal(int r, int c) const;
 
   void setVal(int r, int c, int v);
 
-  int getRows();
+  int getNRows() const;
 
-  int getCols();
+  int getNCols() const;
 
   bool validRow(int r);
 

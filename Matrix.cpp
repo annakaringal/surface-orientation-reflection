@@ -8,13 +8,15 @@ void Matrix::setVal(int r, int c, int v){
   }
 }
 
-int Matrix::getRows(){ return matrix.size(); }
+int Matrix::getNRows() const { return matrix.size(); }
 
-int Matrix::getCols(){ return matrix[0].size(); }
+int Matrix::getNCols() const {
+  return (getNRows() > 0 ? matrix[0].size(): 0);
+}
 
-bool Matrix::validRow(int r){ return r >= 0 && r < rows(); }
+bool Matrix::validRow(int r){ return r >= 0 && r < getNRows(); }
 
-bool Matrix::validCol(int c){ return c >= 0 && c < cols(); }
+bool Matrix::validCol(int c){ return c >= 0 && c < getNCols(); }
 
 int Matrix::calcDeterminant(){
 
