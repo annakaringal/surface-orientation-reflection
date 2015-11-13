@@ -1,6 +1,5 @@
 #include "SurfaceNormalMap.h"
 
-// TODO: Yuck. 
 void drawBorder(Image* img, int r, int c, int color){ 
   img->setPixel(r-1,c-1,color);
   img->setPixel(r-1,c,color);
@@ -41,11 +40,11 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
             int p_int = atoi(p.c_str());
 
             if (i==0){
-                light_sources->setValue(i,0);
+                light_sources->setValue(i,0,p_int);
             } else if (i == 1){
-                light_sources->setValue(i,1);
+                light_sources->setValue(i,1,p_int);
             } else {
-                light_sources->setValue(i,2);
+                light_sources->setValue(i,2,p_int);
             }
         }
       }
@@ -110,12 +109,11 @@ void SurfaceNormalMap::calcAndDrawNormals(Image* output_img){
 Matrix SurfaceNormalMap::calcNormal(int r, int c){
   // Get brightness for each of the 3 images in images
   Matrix intensities(1,3);
-  intensities.setValue(0,0,images[0]->getPixel(r,c)),
+  intensities.setValue(0,0,images[0]->getPixel(r,c));
   intensities.setValue(0,1,images[1]->getPixel(r,c));
   intensities.setValue(0,2,images[2]->getPixel(r,c));
-
   // Find inverse of normals to light sources
-  Matrix light_sources_inverse = light_sources->inverse;
+  Matrix light_sources_inverse = light_sources->inverse();
 
   // Multiply light_source_inverse by intensities
   Matrix N = light_sources_inverse * intensities;
