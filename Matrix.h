@@ -11,7 +11,7 @@ class Matrix{
 
 public:
 
-  Matrix(int rows, int cols){
+  Matrix(int rows=1, int cols=3){
     for (int i=0; i<rows; i++){
       vector<int> row;
       for (int j=0; j<cols; j++){
