@@ -127,7 +127,7 @@ Matrix SurfaceNormalMap::calcNormal(int r, int c){
 }
 
 void SurfaceNormalMap::drawNormal(int r, int c, Matrix normal, Image* img){
-  Matrix scaled = normal.scaled(10 / calcSingleColMatrixMagnitude(normal));
+  Matrix scaled = normal * (10 / calcSingleColMatrixMagnitude(normal));
   int normal_end_x = r + scaled.getValue(0,1);
   int normal_end_y = c + scaled.getValue(0,2);
   line(img, r, c, normal_end_x, normal_end_y, 255); 

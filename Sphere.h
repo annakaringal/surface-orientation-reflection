@@ -49,7 +49,7 @@ public:
     pixel b = findBrightestPixel();
     Matrix normal = findNormal(b.x, b.y);
     float magnitude = calcSingleColMatrixMagnitude(normal);
-    return normal->scaled(b.brightness / magnitude);
+    return normal * (b.brightness / magnitude);
   }
 
 private:

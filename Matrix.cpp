@@ -56,11 +56,11 @@ int Matrix::calcDeterminant(){
   }
 }
 
-Matrix Matrix::scaleMatrix(float factor){
-  Matrix new_m(rows(), cols());
-   for (int i=0; i<rows(); i++){
-      for (int j=0; j<cols(); j++){
-        new_m.setValue(i,j, getValue(i,j) * factor);
+Matrix Matrix::operator* (float x){
+  Matrix new_m(getNRows(), getNCols());
+   for (int i=0; i<getNRows(); i++){
+      for (int j=0; j<getNCols(); j++){
+        new_m.setValue(i,j, getValue(i,j) * x);
       }
    }
   return new_m;

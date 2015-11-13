@@ -44,13 +44,9 @@ public:
 
   int determinant() { return calcDeterminant(); };
 
-  Matrix scaled(float factor) { return scaleMatrix(); };
+  Matrix inverse();
 
-  Matrix inverse() { return calcInverse(); };
-
-  // void scaleVectorToLength(int length){ 
-  //   scaleVecLength(length); 
-  // }
+  Matrix operator* (float x);
 
 
 private:
@@ -70,10 +66,6 @@ private:
   bool validCol(int c);
 
   int calcDeterminant();
-
-  Matrix scaleMatrix(float factor);
-
-  Matrix calcInverse();
 
 };
 
