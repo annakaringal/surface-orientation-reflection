@@ -3,8 +3,8 @@ VERS = -std=c++11
 
 all: s1 s2 s3
 
-s1: s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o Validation.o Image.o Pgm.o
-	$(CC) s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o Validation.o Image.o Pgm.o -o s1
+s1: s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o Matrix.o Validation.o Image.o Pgm.o
+	$(CC) s1.o BinaryImage.o Object.o ObjectLabeler.o ImageObjectDatabase.o Sphere.o Matrix.o Validation.o Image.o Pgm.o -o s1
 
 s2: s2.o Sphere.o Validation.o Matrix.o Image.o Pgm.o
 	$(CC) s2.o Sphere.o Validation.o Matrix.o Image.o Pgm.o -o s2
