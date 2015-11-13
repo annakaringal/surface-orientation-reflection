@@ -8,7 +8,7 @@
 
 #include "pgm/Image.h"
 #include "Validation.h"
-#include "3dVec.h"
+#include "Matrix.h"
 
 using namespace std;
 
@@ -18,6 +18,7 @@ class SurfaceNormalMap{
 
 public:
   SurfaceNormalMap(const char* dirs_fname, vector<Image*> obj_imgs, int step, int threshold) : images(obj_imgs) {
+    light_sources = new Matrix(3,3);
     setLightSourcesFromFile(dirs_fname);
     generateGridPoints(step, threshold);
   };
@@ -27,8 +28,12 @@ public:
     calcAndDrawNormals(output_img);
   }
 
+  void drawAlbedo(Image* output_img, int threshold){
+    shadeAlbedo(output_img, int threshold);
+  }
+
 private:
-  vector<3dVec> light_sources;
+  Matrix* light_sources;
   vector< pair<int, int> > grid_points;
   vector<Image*> images;
 
@@ -42,9 +47,13 @@ private:
 
   void calcAndDrawNormals(Image* output_img);
 
-  3dVec calcNormal(int r, int c);
+  Matrix calcNormal(int r, int c);
 
-  void drawNormal(3dVec normal, Image* output_img);
+  void drawNormal(int r, int c, Matrix normal, Image* img);
+
+  void shadeAlbedo(Image* img, int threshold);
+
+  int calcAlbedo(int r, int c);
 };
 
 #endif

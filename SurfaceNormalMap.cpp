@@ -1,5 +1,6 @@
 #include "SurfaceNormalMap.h"
 
+// TODO: Yuck. 
 void drawBorder(Image* img, int r, int c, int color){ 
   img->setPixel(r-1,c-1,color);
   img->setPixel(r-1,c,color);
@@ -27,8 +28,7 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
 
       // For each line in file
       while(getline(readf, params)){
-        // Split up line into different vars & save as new lightsource  to vector
-        3dVec ls;
+        // Split up line into different vars & save as new matrix
         istringstream pss(params);
         for(int i=0; i<3; i++){
             string p;    
@@ -41,14 +41,13 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
             int p_int = atoi(p.c_str());
 
             if (i==0){
-                ls.setX(p_int);
+                light_sources->setValue(i,0);
             } else if (i == 1){
-                ls.setY(p_int);
+                light_sources->setValue(i,1);
             } else {
-                ls.setZ(p_int);
+                light_sources->setValue(i,2);
             }
         }
-        light_sources.push_back(ls);
       }
   }
   readf.close();
@@ -99,31 +98,71 @@ void SurfaceNormalMap::drawGridPoints(Image* output_img){
   }
 };
 
-void SurfaceNormalMap::calcAndDrawNormals(){
+void SurfaceNormalMap::calcAndDrawNormals(Image* output_img){
   for (int i=0; i<grid_points.size(); i++){
-    3dvec n = calcNormal(grid_points[i].first, grid_points[i].second);
-    drawNormal(n, output_img);
+    int x = grid_points[i].first;
+    int y = grid_points[i].second;
+    Matrix n = calcNormal(x,y);
+    drawNormal(x, y, n, output_img);
   }
 }
 
-3dVec SurfaceNormalMap::calcNormal(int r, int c){
+Matrix SurfaceNormalMap::calcNormal(int r, int c){
   // Get brightness for each of the 3 images in images
-  3dVec intensities(images[0]->getPixel(r,c), 
-                    images[1]->getPixel(r,c), 
-                    images[2]->getPixel(r,c));
+  Matrix intensities(1,3);
+  intensities.setValue(0,0,images[0]->getPixel(r,c)),
+  intensities.setValue(0,1,images[1]->getPixel(r,c));
+  intensities.setValue(0,2,images[2]->getPixel(r,c));
 
   // Find inverse of normals to light sources
-  vector <3dVec> light_sources_inverse = invert(light_sources);
+  Matrix light_sources_inverse = light_sources->inverse;
+
+  // Multiply light_source_inverse by intensities
+  Matrix N = light_sources_inverse * intensities;
+  // divide by magnitude to get orientation of normal
+  float magnitude = calcSingleColMatrixMagnitude(N);
+  Matrix normal(1,3);
+  normal.setValue(0,0, N.getValue(0,0) / magnitude),
+  normal.setValue(0,1, N.getValue(0,1) / magnitude);
+  normal.setValue(0,2, N.getValue(0,2) / magnitude);
+  return normal;
+}
+
+void SurfaceNormalMap::drawNormal(int r, int c, Matrix normal, Image* img){
+  Matrix scaled = normal.scaled(10 / calcSingleColMatrixMagnitude(normal));
+  int normal_end_x = r + scaled.getValue(0,1);
+  int normal_end_y = c + scaled.getValue(0,2);
+  line(img, r, c, normal_end_x, normal_end_y, 255); 
+}
+
+void SurfaceNormalMap::shadeAlbedo(Image* img, int threshold){
+  int rows = img->getNRows();
+  int cols = img->getNCols();
+
+  for (int i=0; i<rows; i++){
+    for (int j=0; j<cols; j++){
+      if (visibleInAllImages(i,j,threshold)){
+        int a = calcAlbedo(i,j);
+        img->setPixel(i,j,a);
+      }
+    }
+  }
+}
+
+// TODO: refactor this out into separate f'n
+int SurfaceNormalMap::calcAlbedo(int r, int c){
+  // Get brightness for each of the 3 images in images
+  Matrix intensities(1,3);
+  intensities.setValue(0,0,images[0]->getPixel(r,c)),
+  intensities.setValue(0,1,images[1]->getPixel(r,c));
+  intensities.setValue(0,2,images[2]->getPixel(r,c));
+
+  // Find inverse of normals to light sources
+  Matrix light_sources_inverse = light_sources->inverse;
 
   // Multiply lighht_source_inverse by intensities
-  3dVec N(matrixProduct(0, 0, light_sources_inverse, N),
-          matrixProduct(0, 1, light_sources_inverse, N),
-          matrixProduct(0, 2, light_sources_inverse, N));
+  Matrix N = light_sources_inverse * intensities;
 
-  // divide by magnitude to get orientation of normal
-  float magnitude = N.magnitude();
-  3dVec normal(N.get(X) / magnitude,
-               N.get(Y) / magnitude,
-               N.get(Z) / magnitude);
-  return normal;
+  // albedo is magnitude of N
+  return calcSingleColMatrixMagnitude(N);
 }

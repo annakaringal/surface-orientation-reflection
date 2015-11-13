@@ -9,7 +9,7 @@
 
 #include "pgm/Image.h"
 #include "Validation.h"
-#include "3dVec.h"
+#include "Matrix.h"
 
 using namespace std;
 
@@ -45,11 +45,11 @@ public:
 
   float getRadius() { return radius; };
 
-  3dVec findLightSource(){
+  ThreeDVec findLightSource(){
     pixel b = findBrightestPixel();
-    3dVec normal = findNormal(b.x, b.y);
-    normal.scaleVectorToLength(b.brightness);
-    return normal;
+    Matrix normal(1,3) = findNormal(b.x, b.y);
+    float magnitude = calcSingleColMatrixMagnitude(normal);
+    return normal.scaled(b.brightness / magnitude);
   }
 
 private:
@@ -63,7 +63,7 @@ private:
 
   SphereExtremes calcSphereExtremeties(Image* labeled_img, int label);
 
-  3dVec findNormal(int i, int j);
+  Matrix findNormal(int i, int j);
 
   pixel findBrightestPixel();
 };
