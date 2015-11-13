@@ -69,7 +69,22 @@ Matrix Matrix::operator* (float x){
 Matrix Matrix::calcInverse(){ 
   Matrix inverse(rows(), cols());
 
-  return inverse * determinant();
+Matrix Matrix::operator* (Matrix m){
+  // TODO: raise exception if cannot be multiplied
+  Matrix new_m(getNRows(), m.getNCols());
+
+  int rows = new_m.getNRows();
+  int cols = new_m.getNCols();
+   for (int i=0; i<rows; i++){
+      for (int j=0; j<cols; j++){
+        int new_val = 0;
+        for (int r=0; r<rows; r++){
+          new_val += (getValue(r,j) * m.getValue(i,r));
+        }
+        new_m.setValue(i,j,new_val);
+      }
+   }
+  return new_m;
 }
 
 float calcSingleColMatrixMagnitude(Matrix m){
@@ -79,10 +94,3 @@ float calcSingleColMatrixMagnitude(Matrix m){
   }
   return sqrt(mag_sq);
 }
-
-// int matrixProduct(int r, vector<Matrix> vec_3x3, Matrix vec_3x1){
-//   int prod = vec_3x3[r].getX() * vec_3x1.getX();
-//   prod += vec_3x3[r].getY() * vec_3x1.getY();
-//   prod += vec_3x3[r].getZ() * vec_3x1.getZ();
-//   return prod;
-// }

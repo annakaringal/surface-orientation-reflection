@@ -48,6 +48,7 @@ public:
 
   Matrix operator* (float x);
 
+  Matrix operator* (Matrix m);
 
 private:
 
@@ -70,7 +71,5 @@ private:
 };
 
 float calcSingleColMatrixMagnitude(Matrix m);
-
-// int matrixProduct(int r, vector<Matrix> vec_3x3, Matrix vec_3x1);
 
 #endif
