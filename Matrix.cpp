@@ -72,10 +72,10 @@ Matrix Matrix::calcInverse(){
   return inverse * determinant();
 }
 
-float calcSingleColMatrixMagnitude(Matrix *m){
+float calcSingleColMatrixMagnitude(Matrix m){
   float mag_sq = 0;
-  for (int c=0; c < m->getCols(); c++){
-    mag_sq += m->getValue(0,c) * m->getValue(0,c);
+  for (int c=0; c < m.getCols(); c++){
+    mag_sq += m.getValue(0,c) * m.getValue(0,c);
   }
   return sqrt(mag_sq);
 }

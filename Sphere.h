@@ -47,7 +47,7 @@ public:
 
   Matrix findLightSource(){
     pixel b = findBrightestPixel();
-    Matrix* normal = findNormal(b.x, b.y);
+    Matrix normal = findNormal(b.x, b.y);
     float magnitude = calcSingleColMatrixMagnitude(normal);
     return normal->scaled(b.brightness / magnitude);
   }
@@ -63,7 +63,7 @@ private:
 
   SphereExtremes calcSphereExtremeties(Image* labeled_img, int label);
 
-  Matrix* findNormal(int i, int j);
+  Matrix findNormal(int i, int j);
 
   pixel findBrightestPixel();
 };
