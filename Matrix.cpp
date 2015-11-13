@@ -1,6 +1,6 @@
 #include "Matrix.h"
 
-int Matrix::getVal(int r, int c){ return matrix[r][c]; }
+int Matrix::getVal(int r, int c) const { return matrix[r][c]; }
 
 void Matrix::setVal(int r, int c, int v){
   if (validRow(r) && validCol(c)) {
@@ -72,10 +72,10 @@ Matrix Matrix::calcInverse(){
   return inverse * determinant();
 }
 
-int calcSingleColMatrixMagnitude(Matrix m){
+float calcSingleColMatrixMagnitude(Matrix *m){
   float mag_sq = 0;
-  for (int r=0; r<m.rows(); r++){
-    mag_sq += m.getValue(r,0) * m.getValue(r,0);
+  for (int c=0; c < m->getCols(); c++){
+    mag_sq += m->getValue(0,c) * m->getValue(0,c);
   }
   return sqrt(mag_sq);
 }

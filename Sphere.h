@@ -45,16 +45,16 @@ public:
 
   float getRadius() { return radius; };
 
-  ThreeDVec findLightSource(){
+  Matrix findLightSource(){
     pixel b = findBrightestPixel();
-    Matrix normal(1,3) = findNormal(b.x, b.y);
+    Matrix* normal = findNormal(b.x, b.y);
     float magnitude = calcSingleColMatrixMagnitude(normal);
-    return normal.scaled(b.brightness / magnitude);
+    return normal->scaled(b.brightness / magnitude);
   }
 
 private:
   pair <float, float> center;
-  float radius; 
+  float radius;
   Image* img;
 
   void setParamsFromFile(const char* params_fname);
@@ -63,7 +63,7 @@ private:
 
   SphereExtremes calcSphereExtremeties(Image* labeled_img, int label);
 
-  Matrix findNormal(int i, int j);
+  Matrix* findNormal(int i, int j);
 
   pixel findBrightestPixel();
 };

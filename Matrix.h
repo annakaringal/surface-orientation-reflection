@@ -77,7 +77,7 @@ private:
 
 };
 
-float calcSingleColMatrixMagnitude(Matrix m);
+float calcSingleColMatrixMagnitude(Matrix* m);
 
 // int matrixProduct(int r, vector<Matrix> vec_3x3, Matrix vec_3x1);
 
