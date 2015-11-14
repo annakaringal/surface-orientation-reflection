@@ -62,8 +62,13 @@ Matrix Matrix::calcInverse(){
   // Find matrix of mniors
   Matrix minors = minors();
 
-  // Find cofactor of matrix of minors
-  Matrix cofactor = minors.cofactor();
+}
+
+Matrix Matrix::calcCofactor(){ 
+  // TODO: raise exception if not square matrix
+  // Cofactor is matrix of minors * checkerboard matrix
+  return minors() * checkerboardMatrix(getNRows(), getNCols());
+}
 
 Matrix Matrix::calcMinors(){ 
   Matrix m(getNRows(), getNCols());
@@ -132,6 +137,20 @@ Matrix Matrix::operator* (Matrix m){
       }
    }
   return new_m;
+}
+
+Matrix checkerboardMatrix(int rows, int cols){
+  Matrix m(rows, cols);
+   for (int i=0; i<rows; i++){
+      for (int j=0; j<cols; j++){
+        if (i % 2 == j % 2){
+          m.setValue(i,j,1);
+        } else { 
+          m.setValue(i,j,-1);
+        }
+      }
+   }
+  return m;
 }
 
 float calcSingleColMatrixMagnitude(Matrix m){
