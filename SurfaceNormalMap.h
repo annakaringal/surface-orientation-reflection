@@ -18,7 +18,6 @@ class SurfaceNormalMap{
 
 public:
   SurfaceNormalMap(const char* dirs_fname, vector<Image*> obj_imgs, int step, int threshold) : images(obj_imgs) {
-    light_sources = new Matrix(3,3);
     setLightSourcesFromFile(dirs_fname);
     generateGridPoints(step, threshold);
   };
@@ -34,6 +33,7 @@ public:
 
 private:
   Matrix* light_sources;
+  Matrix light_sources_inverse;
   vector< pair<int, int> > grid_points;
   vector<Image*> images;
 

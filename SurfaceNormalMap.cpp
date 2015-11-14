@@ -23,12 +23,13 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
   // Get params line from file
   string params;
   vector<string> param_strings; 
+  vector <Matrix> raw_ls;
   if (readf.is_open()){
       // For each line in file
-      int count_ls = 0;
       while(getline(readf, params)){
         // Split up line into different vars & save as new matrix
         istringstream pss(params);
+        Matrix ls(1,3);
         for(int i=0; i<3; i++){
             string p;    
             getline(pss, p,' ');
@@ -38,17 +39,38 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
             }
             float p_int = atof(p.c_str());
             if (i==0){
-                light_sources->setValue(count_ls,i,p_int);
+                ls.setValue(0,i,p_int);
             } else if (i == 1){
-                light_sources->setValue(count_ls,i,p_int);
+                ls.setValue(0,i,p_int);
             } else {
-                light_sources->setValue(count_ls,i,p_int);
+                ls.setValue(0,i,p_int);
             }
         }
-        count_ls++;
+        raw_ls.push_back(ls);
       }
   }
   readf.close();
+
+  // Make light sources matrix the correct size
+  light_sources = new Matrix(raw_ls.size(), 3);
+
+  // Find average of magnitudes of light sources.
+  float avg_mag = 0;
+  for (int i=0; i<raw_ls.size(); i++){
+    avg_mag += calcSingleColMatrixMagnitude(raw_ls[i]);
+  }
+  avg_mag = avg_mag / float(raw_ls.size());
+
+  // Scale raw light source and save scaled values to light_sources
+  for (int i=0; i<raw_ls.size(); i++){
+    Matrix scaled = raw_ls[i] * (avg_mag / calcSingleColMatrixMagnitude(raw_ls[i]));
+    light_sources->setValue(i, 0, scaled.getValue(0,0));
+    light_sources->setValue(i, 1, scaled.getValue(0,1));
+    light_sources->setValue(i, 2, scaled.getValue(0,2));
+  }
+
+  // Set light sources inverse as well
+  light_sources_inverse = light_sources->inverse();
 };
 
 void SurfaceNormalMap::generateGridPoints(int step, int threshold){
