@@ -49,10 +49,10 @@ int Matrix::calcDeterminant(){
 
 Matrix Matrix::calcInverse(){
   // TODO: raise exception if det == 0 or is not a square matrix
-
-  // Find matrix of mniors
-  Matrix minors = minors();
-
+  // transpose cofactor to get adjugate
+  Matrix adjugate = cofactor().transpose();
+  // Inverse is adjugate * 1/determinant
+  return adjugate * (1/determinant());
 }
 
 Matrix Matrix::calcCofactor(){ 
