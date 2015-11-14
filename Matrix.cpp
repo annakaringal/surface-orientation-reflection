@@ -83,6 +83,15 @@ Matrix Matrix::operator* (float x){
   return new_m;
 }
 
+Matrix Matrix::calcTranspose(){ 
+  Matrix transpose(getNCols(), getNRows());
+   for (int i=0; i<getNRows(); i++){
+      for (int j=0; j<getNCols(); j++){
+        transpose.setValue(j,i, getValue(i,j));
+      }
+   }
+  return transpose;
+}
 
 Matrix Matrix::operator* (Matrix m){
   // TODO: raise exception if cannot be multiplied
