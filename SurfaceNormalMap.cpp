@@ -53,13 +53,13 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
   // Find average of magnitudes of light sources.
   float avg_mag = 0;
   for (int i=0; i<raw_ls.size(); i++){
-    avg_mag += calcSingleColMatrixMagnitude(raw_ls[i]);
+    avg_mag += magnitude(raw_ls[i]);
   }
   avg_mag = avg_mag / float(raw_ls.size());
 
   // Scale raw light source and save scaled values to light_sources
   for (int i=0; i<raw_ls.size(); i++){
-    Matrix scaled = raw_ls[i] * (avg_mag / calcSingleColMatrixMagnitude(raw_ls[i]));
+    Matrix scaled = raw_ls[i] * (avg_mag / magnitude(raw_ls[i]));
     light_sources->setValue(i, 0, scaled.getValue(0,0));
     light_sources->setValue(i, 1, scaled.getValue(0,1));
     light_sources->setValue(i, 2, scaled.getValue(0,2));
@@ -127,7 +127,7 @@ Matrix SurfaceNormalMap::calcNormal(int r, int c){
   Matrix N = light_sources_inverse * intensities;
 
   // divide by magnitude to get orientation of normal
-  float magnitude = calcSingleColMatrixMagnitude(N);
+  float magnitude = magnitude(N);
   Matrix normalized(3,1);
   normalized.setValue(0,0, N.getValue(0,0) / magnitude),
   normalized.setValue(1,0, N.getValue(1,0) / magnitude);
@@ -136,7 +136,7 @@ Matrix SurfaceNormalMap::calcNormal(int r, int c){
 }
 
 void SurfaceNormalMap::drawNormal(int r, int c, Matrix normal, Image* img){
-  Matrix scaled = normal * (10 / calcSingleColMatrixMagnitude(normal));
+  Matrix scaled = normal * (10 / magnitude(normal));
   int normal_end_x = r + scaled.getValue(0,0);
   int normal_end_y = c + scaled.getValue(1,0);
   line(img, r, c, normal_end_x, normal_end_y, 255); 

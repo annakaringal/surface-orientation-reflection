@@ -48,7 +48,7 @@ public:
   Matrix findLightSource(){
     pixel b = findBrightestPixel();
     Matrix normal = findNormal(b.x, b.y);
-    float magnitude = calcSingleColMatrixMagnitude(normal);
+    float magnitude = magnitude(normal);
     return normal * (b.brightness / magnitude);
   }
 

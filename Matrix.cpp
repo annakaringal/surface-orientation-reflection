@@ -147,12 +147,18 @@ Matrix Matrix::operator* (Matrix m){
   return new_m;
 }
 
-float calcSingleColMatrixMagnitude(Matrix m){
+float magnitude(Matrix m){
   // TODO: raise exception if not a single col matrix
-  // TODO: support single row matrix as well, shorten this f'n name
   float mag_sq = 0;
-  for (int c=0; c < m.getCols(); c++){
-    mag_sq += m.getValue(0,c) * m.getValue(0,c);
+  if (m.getRows() == 1){
+    for (int c=0; c < m.getCols(); c++){
+      mag_sq += m.getValue(0,c) * m.getValue(0,c);
+    }
+  } 
+  if (m.getCols() == 1){
+    for (int r=0; r < m.getRows(); r++){
+      mag_sq += m.getValue(r,0) * m.getValue(r,0);
+    }
   }
   return sqrt(mag_sq);
 }

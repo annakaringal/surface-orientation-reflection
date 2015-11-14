@@ -96,6 +96,6 @@ private:
 
 Matrix checkerboardMatrix(int rows, int cols);
 
-float calcSingleColMatrixMagnitude(Matrix m);
+float magnitude(Matrix m);
 
 #endif
