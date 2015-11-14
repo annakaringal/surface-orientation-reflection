@@ -137,11 +137,11 @@ Matrix Matrix::operator* (Matrix m){
   int cols = new_m.getCols();
    for (int i=0; i<rows; i++){
       for (int j=0; j<cols; j++){
-        float new_val = 0;
+        float dp = 0;
         for (int r=0; r<rows; r++){
-          new_val += (getValue(r,j) * m.getValue(i,r));
+          dp += (getValue(i,r) * m.getValue(r,j));
         }
-        new_m.setValue(i,j,new_val);
+        new_m.setValue(i,j,dp);
       }
    }
   return new_m;
