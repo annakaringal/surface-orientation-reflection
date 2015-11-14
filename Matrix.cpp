@@ -5,7 +5,8 @@ int Matrix::getVal(int r, int c) const { return matrix[r][c]; }
 void Matrix::setVal(int r, int c, int v){
   if (validRow(r) && validCol(c)) {
     matrix[r][c] = v;
-  }
+  } 
+  // TODO: raise excep if not valid row or col
 }
 
 int Matrix::getNRows() const { return matrix.size(); }
@@ -19,7 +20,7 @@ bool Matrix::validRow(int r){ return r >= 0 && r < getRows(); }
 bool Matrix::validCol(int c){ return c >= 0 && c < getCols(); }
 
 int Matrix::calcDeterminant(){
-
+  // TODO: Raise exception if not a square matrix
   int det = 0;
   int rows = getRows();
   int cols = getCols();
@@ -147,6 +148,8 @@ Matrix Matrix::operator* (Matrix m){
 }
 
 float calcSingleColMatrixMagnitude(Matrix m){
+  // TODO: raise exception if not a single col matrix
+  // TODO: support single row matrix as well, shorten this f'n name
   float mag_sq = 0;
   for (int c=0; c < m.getCols(); c++){
     mag_sq += m.getValue(0,c) * m.getValue(0,c);
