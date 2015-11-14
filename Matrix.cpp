@@ -37,19 +37,10 @@ int Matrix::calcDeterminant(){
     return a*d - b*c;
   } else {
     for (int c=0; c<cols; c++){
-      Matrix m(rows-1, cols-1);
-      for (int i=1; i<rows; i++){
-        for (int j=0; j<cols; j++){
-          if (j != c){
-            m.setValue(i,j,getValue(i,j));
-          }
-        }
-      }
-
       if (c % 2 == 0 ){
-        det += getValue(0,c) * m.calcDeterminant();
+        det += getValue(0,c) * getMinor(0,c);
       } else { 
-        det -= getValue(0,c) * m.calcDeterminant();
+        det -= getValue(0,c) * getMinor(0,c);
       }
     }
     return det; 
