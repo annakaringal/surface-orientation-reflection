@@ -54,6 +54,8 @@ public:
 
   Matrix minors() { return calcMinors(); };
 
+  Matrix checkerboard() { return performCheckerboard(); };
+
   Matrix operator* (float x);
 
   Matrix operator* (Matrix m);
@@ -85,6 +87,8 @@ private:
   Matrix calcTranspose();
 
   Matrix calcMinors();
+
+  Matrix performCheckerboard();
 
   int getMinor(int r, int c);
 

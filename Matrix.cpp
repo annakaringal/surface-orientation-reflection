@@ -66,8 +66,8 @@ Matrix Matrix::calcInverse(){
 
 Matrix Matrix::calcCofactor(){ 
   // TODO: raise exception if not square matrix
-  // Cofactor is matrix of minors * checkerboard matrix
-  return minors() * checkerboardMatrix(getNRows(), getNCols());
+  // Cofactor is matrix of minors checkerboarded
+  return minors().checkerboard();
 }
 
 Matrix Matrix::calcMinors(){ 
@@ -121,6 +121,20 @@ Matrix Matrix::calcTranspose(){
   return transpose;
 }
 
+Matrix Matrix::performCheckerboard(){
+  Matrix m(getRows(), getCols());
+   for (int i=0; i<getRows(); i++){
+      for (int j=0; j<getCols(); j++){
+        if (i % 2 == j % 2){
+          m.setValue(i,j, getValue(i,j));
+        } else { 
+          m.setValue(i,j, getValue(i,j) * -1);
+        }
+      }
+   }
+  return m;
+}
+
 Matrix Matrix::operator* (Matrix m){
   // TODO: raise exception if cannot be multiplied
   Matrix new_m(getNRows(), m.getNCols());
@@ -137,20 +151,6 @@ Matrix Matrix::operator* (Matrix m){
       }
    }
   return new_m;
-}
-
-Matrix checkerboardMatrix(int rows, int cols){
-  Matrix m(rows, cols);
-   for (int i=0; i<rows; i++){
-      for (int j=0; j<cols; j++){
-        if (i % 2 == j % 2){
-          m.setValue(i,j,1);
-        } else { 
-          m.setValue(i,j,-1);
-        }
-      }
-   }
-  return m;
 }
 
 float calcSingleColMatrixMagnitude(Matrix m){
