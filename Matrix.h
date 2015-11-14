@@ -40,7 +40,7 @@ public:
 
   float getValue(int r, int c) const { return getVal(r,c); };
 
-  void setValue(int r, int c, int v) { setVal(r,c,v); };
+  void setValue(int r, int c, float v) { setVal(r,c,v); };
 
   float determinant() { return calcDeterminant(); };
 
