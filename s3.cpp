@@ -51,7 +51,8 @@ int main(int argc, const char * argv[]) {
     SurfaceNormalMap snm(input_dirs_fname, obj_images, step, threshold);
 
     // Create copy of first image and draw normals map
-    Image* output_img(obj_images[0]);
+    Image* output_img = new Image(*obj_images[0]);
+
     snm.drawMap(output_img);
 
     // Write output image to file
