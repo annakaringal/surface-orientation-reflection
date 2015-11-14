@@ -11,12 +11,12 @@ void Matrix::setVal(int r, int c, int v){
 int Matrix::getNRows() const { return matrix.size(); }
 
 int Matrix::getNCols() const {
-  return (getNRows() > 0 ? matrix[0].size(): 0);
+  return (getRows() > 0 ? matrix[0].size(): 0);
 }
 
-bool Matrix::validRow(int r){ return r >= 0 && r < getNRows(); }
+bool Matrix::validRow(int r){ return r >= 0 && r < getRows(); }
 
-bool Matrix::validCol(int c){ return c >= 0 && c < getNCols(); }
+bool Matrix::validCol(int c){ return c >= 0 && c < getCols(); }
 
 int Matrix::calcDeterminant(){
 
@@ -71,9 +71,10 @@ Matrix Matrix::calcCofactor(){
 }
 
 Matrix Matrix::calcMinors(){ 
-  Matrix m(getNRows(), getNCols());
-   for (int i=0; i<getNRows(); i++){
-      for (int j=0; j<getNCols(); j++){
+  // TODO: raise exception if not square matrix
+  Matrix m(getRows(), getCols());
+   for (int i=0; i<getRows(); i++){
+      for (int j=0; j<getCols(); j++){
         m.setValue(i,j, getMinor(i,j));
       }
    }
@@ -81,9 +82,10 @@ Matrix Matrix::calcMinors(){
 }
 
 int Matrix::getMinor(int r, int c){
-  Matrix minor(getNRows()-1, getNCols()-1);
-  for (int i=0; i<getNRows(); i++){
-    for (int j=0; j<getNCols(); j++){
+  // TODO: raise exception if not square matrix
+  Matrix minor(getRows()-1, getCols()-1);
+  for (int i=0; i<getRows(); i++){
+    for (int j=0; j<getCols(); j++){
       if (i!=r && j!=c){
         if (i<r && j<c){
           minor.setValue(i,j, getValue(i,j));
@@ -102,9 +104,9 @@ int Matrix::getMinor(int r, int c){
 }
 
 Matrix Matrix::operator* (float x){
-  Matrix new_m(getNRows(), getNCols());
-   for (int i=0; i<getNRows(); i++){
-      for (int j=0; j<getNCols(); j++){
+  Matrix new_m(getRows(), getCols());
+   for (int i=0; i<getRows(); i++){
+      for (int j=0; j<getCols(); j++){
         new_m.setValue(i,j, getValue(i,j) * x);
       }
    }
@@ -112,9 +114,9 @@ Matrix Matrix::operator* (float x){
 }
 
 Matrix Matrix::calcTranspose(){ 
-  Matrix transpose(getNCols(), getNRows());
-   for (int i=0; i<getNRows(); i++){
-      for (int j=0; j<getNCols(); j++){
+  Matrix transpose(getCols(), getRows());
+   for (int i=0; i<getRows(); i++){
+      for (int j=0; j<getCols(); j++){
         transpose.setValue(j,i, getValue(i,j));
       }
    }
@@ -137,10 +139,10 @@ Matrix Matrix::performCheckerboard(){
 
 Matrix Matrix::operator* (Matrix m){
   // TODO: raise exception if cannot be multiplied
-  Matrix new_m(getNRows(), m.getNCols());
+  Matrix new_m(getRows(), m.getCols());
 
-  int rows = new_m.getNRows();
-  int cols = new_m.getNCols();
+  int rows = new_m.getRows();
+  int cols = new_m.getCols();
    for (int i=0; i<rows; i++){
       for (int j=0; j<cols; j++){
         int new_val = 0;
