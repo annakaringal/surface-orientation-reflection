@@ -56,6 +56,23 @@ int Matrix::calcDeterminant(){
   }
 }
 
+Matrix Matrix::calcInverse(){
+  // TODO: raise exception if det == 0 or is not a square matrix
+
+  // Find matrix of mniors
+  Matrix minors = minors();
+
+  // Find cofactor of matrix of minors
+  Matrix cofactor = minors.cofactor();
+
+  // transpose cofactor to get adjugate
+  Matrix adjugate = cofactor.transpose();
+
+  // Inverse is adjugate * 1/determinant
+  return adjugate * (1/determinant());
+
+}
+
 Matrix Matrix::operator* (float x){
   Matrix new_m(getNRows(), getNCols());
    for (int i=0; i<getNRows(); i++){
@@ -66,8 +83,6 @@ Matrix Matrix::operator* (float x){
   return new_m;
 }
 
-Matrix Matrix::calcInverse(){ 
-  Matrix inverse(rows(), cols());
 
 Matrix Matrix::operator* (Matrix m){
   // TODO: raise exception if cannot be multiplied

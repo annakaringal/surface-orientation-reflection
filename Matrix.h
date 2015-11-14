@@ -44,7 +44,13 @@ public:
 
   int determinant() { return calcDeterminant(); };
 
-  Matrix inverse();
+  Matrix inverse() { return calcInverse(); };
+
+  Matrix cofactor() { return calcCofactor(); };
+
+  Matrix adjugate() { return calcAdjugate(); };
+
+  Matrix transpose() { return calcTranspose(); };
 
   Matrix operator* (float x);
 
@@ -68,7 +74,17 @@ private:
 
   int calcDeterminant();
 
+  Matrix calcInverse();
+
+  Matrix calcCofactor();
+
+  Matrix calcAdjugate();
+
+  Matrix calcTranspose();
+
+
 };
+
 
 float calcSingleColMatrixMagnitude(Matrix m);
 
