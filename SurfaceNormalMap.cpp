@@ -1,14 +1,10 @@
 #include "SurfaceNormalMap.h"
 
 void drawBorder(Image* img, int r, int c, int color){ 
-  img->setPixel(r-1,c-1,color);
   img->setPixel(r-1,c,color);
-  img->setPixel(r-1,c+1,color);
   img->setPixel(r,c-1,color);
   img->setPixel(r,c+1,color);
-  img->setPixel(r+1,c-1,color);
   img->setPixel(r+1,c,color);
-  img->setPixel(r+1,c+1,color);
 }
 
 void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
