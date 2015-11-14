@@ -118,28 +118,26 @@ void SurfaceNormalMap::calcAndDrawNormals(Image* output_img){
 
 Matrix SurfaceNormalMap::calcNormal(int r, int c){
   // Get brightness for each of the 3 images in images
-  Matrix intensities(1,3);
+  Matrix intensities(3,1);
   intensities.setValue(0,0,float(images[0]->getPixel(r,c)));
-  intensities.setValue(0,1,float(images[1]->getPixel(r,c)));
-  intensities.setValue(0,2,float(images[2]->getPixel(r,c)));
-  // Find inverse of normals to light sources
-  Matrix light_sources_inverse = light_sources->inverse();
+  intensities.setValue(1,0,float(images[1]->getPixel(r,c)));
+  intensities.setValue(2,0,float(images[2]->getPixel(r,c)));
 
   // Multiply light_source_inverse by intensities
   Matrix N = light_sources_inverse * intensities;
 
   // divide by magnitude to get orientation of normal
   float magnitude = calcSingleColMatrixMagnitude(N);
-  Matrix normal(1,3);
-  normal.setValue(0,0, N.getValue(0,0) / magnitude),
-  normal.setValue(0,1, N.getValue(0,1) / magnitude);
-  normal.setValue(0,2, N.getValue(0,2) / magnitude);
-  return normal;
+  Matrix normalized(3,1);
+  normalized.setValue(0,0, N.getValue(0,0) / magnitude),
+  normalized.setValue(1,0, N.getValue(1,0) / magnitude);
+  normalized.setValue(2,0, N.getValue(2,0) / magnitude);
+  return normalized;
 }
 
 void SurfaceNormalMap::drawNormal(int r, int c, Matrix normal, Image* img){
   Matrix scaled = normal * (10 / calcSingleColMatrixMagnitude(normal));
-  float normal_end_x = r + scaled.getValue(0,1);
-  float normal_end_y = c + scaled.getValue(0,2);
-  line(img, r, c, int(normal_end_x), int(normal_end_y), 255); 
+  int normal_end_x = r + scaled.getValue(0,0);
+  int normal_end_y = c + scaled.getValue(1,0);
+  line(img, r, c, normal_end_x, normal_end_y, 255); 
 }
