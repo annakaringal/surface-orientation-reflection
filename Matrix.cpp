@@ -65,12 +65,35 @@ Matrix Matrix::calcInverse(){
   // Find cofactor of matrix of minors
   Matrix cofactor = minors.cofactor();
 
-  // transpose cofactor to get adjugate
-  Matrix adjugate = cofactor.transpose();
+Matrix Matrix::calcMinors(){ 
+  Matrix m(getNRows(), getNCols());
+   for (int i=0; i<getNRows(); i++){
+      for (int j=0; j<getNCols(); j++){
+        m.setValue(i,j, getMinor(i,j));
+      }
+   }
+   return m;
+}
 
-  // Inverse is adjugate * 1/determinant
-  return adjugate * (1/determinant());
+int Matrix::getMinor(int r, int c){
+  Matrix minor(getNRows()-1, getNCols()-1);
+  for (int i=0; i<getNRows(); i++){
+    for (int j=0; j<getNCols(); j++){
+      if (i!=r && j!=c){
+        if (i<r && j<c){
+          minor.setValue(i,j, getValue(i,j));
+        } else if (i<r && j>c){
+          minor.setValue(i,j-1, getValue(i,j));
+        } else if (i>r && j<c){
+          minor.setValue(i-1,j, getValue(i,j));
+        } else {
+          minor.setValue(i-1,j-1, getValue(i,j));
+        }
 
+      }
+    } 
+  }
+  return minor.determinant();
 }
 
 Matrix Matrix::operator* (float x){

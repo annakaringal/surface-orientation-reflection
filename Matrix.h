@@ -52,6 +52,8 @@ public:
 
   Matrix transpose() { return calcTranspose(); };
 
+  Matrix minors() { return calcMinors(); };
+
   Matrix operator* (float x);
 
   Matrix operator* (Matrix m);
@@ -82,6 +84,9 @@ private:
 
   Matrix calcTranspose();
 
+  Matrix calcMinors();
+
+  int getMinor(int r, int c);
 
 };
 
