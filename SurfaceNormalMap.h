@@ -23,6 +23,10 @@ public:
     generateGridPoints(step, threshold);
   };
 
+  ~SurfaceNormalMap(){
+    delete light_sources;
+  }
+
   void drawMap(Image* output_img){
     drawGridPoints(output_img);
     calcAndDrawNormals(output_img);
