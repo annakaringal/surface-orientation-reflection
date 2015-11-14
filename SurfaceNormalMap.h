@@ -28,10 +28,6 @@ public:
     calcAndDrawNormals(output_img);
   }
 
-  void drawAlbedo(Image* output_img, int threshold){
-    shadeAlbedo(output_img, int threshold);
-  }
-
 private:
   Matrix* light_sources;
   vector< pair<int, int> > grid_points;
@@ -51,9 +47,6 @@ private:
 
   void drawNormal(int r, int c, Matrix normal, Image* img);
 
-  void shadeAlbedo(Image* img, int threshold);
-
-  int calcAlbedo(int r, int c);
 };
 
 #endif

@@ -1,8 +1,8 @@
 #include "Matrix.h"
 
-int Matrix::getVal(int r, int c) const { return matrix[r][c]; }
+float Matrix::getVal(int r, int c) const { return matrix[r][c]; }
 
-void Matrix::setVal(int r, int c, int v){
+void Matrix::setVal(int r, int c, float v){
   if (validRow(r) && validCol(c)) {
     matrix[r][c] = v;
   } 
@@ -19,9 +19,9 @@ bool Matrix::validRow(int r){ return r >= 0 && r < getRows(); }
 
 bool Matrix::validCol(int c){ return c >= 0 && c < getCols(); }
 
-int Matrix::calcDeterminant(){
+float Matrix::calcDeterminant(){
   // TODO: Raise exception if not a square matrix
-  int det = 0;
+  float det = 0;
   int rows = getRows();
   int cols = getCols();
 
@@ -29,7 +29,7 @@ int Matrix::calcDeterminant(){
    if (rows == 1 && cols == 1){
     return getValue(0,0);
   } else if (rows == 2 && cols == 2){ 
-    int a,b,c,d; 
+    float a,b,c,d; 
     a = getValue(0,0);
     b = getValue(0,1);
     c = getValue(1,0);
@@ -73,7 +73,7 @@ Matrix Matrix::calcMinors(){
    return m;
 }
 
-int Matrix::getMinor(int r, int c){
+float Matrix::getMinor(int r, int c){
   // TODO: raise exception if not square matrix
   Matrix minor(getRows()-1, getCols()-1);
   for (int i=0; i<getRows(); i++){
@@ -124,7 +124,7 @@ Matrix Matrix::performCheckerboard(){
         } else { 
           m.setValue(i,j, getValue(i,j) * -1);
         }
-      }
+      } 
    }
   return m;
 }
@@ -137,7 +137,7 @@ Matrix Matrix::operator* (Matrix m){
   int cols = new_m.getCols();
    for (int i=0; i<rows; i++){
       for (int j=0; j<cols; j++){
-        int new_val = 0;
+        float new_val = 0;
         for (int r=0; r<rows; r++){
           new_val += (getValue(r,j) * m.getValue(i,r));
         }

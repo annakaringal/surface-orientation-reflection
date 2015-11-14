@@ -112,11 +112,11 @@ pixel Sphere::findBrightestPixel(){
 
 Matrix Sphere::findNormal(int i, int j){
   // Calculate x-x0 and y-y0
-  int dx = i-center.first;
-  int dy = j-center.second;
+  float dx = i-center.first;
+  float dy = j-center.second;
 
   // Calculate z - z0 
-  int dz = sqrt(abs((dx * dx) + (dy * dy) - int(radius*radius)));
+  float dz = sqrt(fabs((dx * dx) + (dy * dy) - (radius*radius)));
 
   // Vector is x-x0, y-y0, z-z0
   Matrix normal(1,3);

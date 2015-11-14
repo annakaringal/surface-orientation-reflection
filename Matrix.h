@@ -13,7 +13,7 @@ public:
 
   Matrix(int rows=1, int cols=3){
     for (int i=0; i<rows; i++){
-      vector<int> row;
+      vector<float> row;
       for (int j=0; j<cols; j++){
         row.push_back(0);
       }
@@ -26,7 +26,7 @@ public:
     int cols = m.getCols();
 
     for (int i=0; i<rows; i++){
-      vector<int> row;
+      vector<float> row;
       for (int j=0; j<cols; j++){
         row.push_back(m.getValue(i,j));
       }
@@ -38,11 +38,11 @@ public:
 
   int getCols() const { return getNCols(); };
 
-  int getValue(int r, int c) const { return getVal(r,c); };
+  float getValue(int r, int c) const { return getVal(r,c); };
 
   void setValue(int r, int c, int v) { setVal(r,c,v); };
 
-  int determinant() { return calcDeterminant(); };
+  float determinant() { return calcDeterminant(); };
 
   Matrix inverse() { return calcInverse(); };
 
@@ -62,11 +62,11 @@ public:
 
 private:
 
-  vector < vector<int> > matrix;
+  vector < vector<float> > matrix;
 
-  int getVal(int r, int c) const;
+  float getVal(int r, int c) const;
 
-  void setVal(int r, int c, int v);
+  void setVal(int r, int c, float v);
 
   int getNRows() const;
 
@@ -76,7 +76,7 @@ private:
 
   bool validCol(int c);
 
-  int calcDeterminant();
+  float calcDeterminant();
 
   Matrix calcInverse();
 
@@ -90,7 +90,7 @@ private:
 
   Matrix performCheckerboard();
 
-  int getMinor(int r, int c);
+  float getMinor(int r, int c);
 
 };
 

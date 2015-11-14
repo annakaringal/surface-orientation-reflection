@@ -37,7 +37,7 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
               cerr << "ERROR: Light source vector  must be an integer." << endl;
               exit(-1);
             }
-            int p_int = atoi(p.c_str());
+            float p_int = atof(p.c_str());
 
             if (i==0){
                 light_sources->setValue(i,0,p_int);
@@ -54,10 +54,8 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
 };
 
 void SurfaceNormalMap::generateGridPoints(int step, int threshold){
-
   int rows = images[0]->getNRows();
   int cols = images[0]->getNCols();
-
   for (int i=0; i<rows; i += step){
     for (int j=0; j<cols; j += step){
       if (visibleInAllImages(i,j,threshold)){
@@ -65,25 +63,21 @@ void SurfaceNormalMap::generateGridPoints(int step, int threshold){
       }
     }
   }
-
 };
 
 bool SurfaceNormalMap::visibleInAllImages(int r, int c, int threshold){
   bool visible = true;
-
   for(int i=0;i<images.size();i++){
     if (images[i]->getPixel(r,c) < threshold){
       visible = false; 
       break;
     }
   }
-
   return visible;
 };
 
 void SurfaceNormalMap::drawGridPoints(Image* output_img){
   int color=0;
-
   // For each stored gridpoint
   for (int i=0; i<grid_points.size(); i++){
 
@@ -109,14 +103,15 @@ void SurfaceNormalMap::calcAndDrawNormals(Image* output_img){
 Matrix SurfaceNormalMap::calcNormal(int r, int c){
   // Get brightness for each of the 3 images in images
   Matrix intensities(1,3);
-  intensities.setValue(0,0,images[0]->getPixel(r,c));
-  intensities.setValue(0,1,images[1]->getPixel(r,c));
-  intensities.setValue(0,2,images[2]->getPixel(r,c));
+  intensities.setValue(0,0,float(images[0]->getPixel(r,c)));
+  intensities.setValue(0,1,float(images[1]->getPixel(r,c)));
+  intensities.setValue(0,2,float(images[2]->getPixel(r,c)));
   // Find inverse of normals to light sources
   Matrix light_sources_inverse = light_sources->inverse();
 
   // Multiply light_source_inverse by intensities
   Matrix N = light_sources_inverse * intensities;
+
   // divide by magnitude to get orientation of normal
   float magnitude = calcSingleColMatrixMagnitude(N);
   Matrix normal(1,3);
@@ -128,39 +123,7 @@ Matrix SurfaceNormalMap::calcNormal(int r, int c){
 
 void SurfaceNormalMap::drawNormal(int r, int c, Matrix normal, Image* img){
   Matrix scaled = normal * (10 / calcSingleColMatrixMagnitude(normal));
-  int normal_end_x = r + scaled.getValue(0,1);
-  int normal_end_y = c + scaled.getValue(0,2);
-  line(img, r, c, normal_end_x, normal_end_y, 255); 
-}
-
-void SurfaceNormalMap::shadeAlbedo(Image* img, int threshold){
-  int rows = img->getNRows();
-  int cols = img->getNCols();
-
-  for (int i=0; i<rows; i++){
-    for (int j=0; j<cols; j++){
-      if (visibleInAllImages(i,j,threshold)){
-        int a = calcAlbedo(i,j);
-        img->setPixel(i,j,a);
-      }
-    }
-  }
-}
-
-// TODO: refactor this out into separate f'n
-int SurfaceNormalMap::calcAlbedo(int r, int c){
-  // Get brightness for each of the 3 images in images
-  Matrix intensities(1,3);
-  intensities.setValue(0,0,images[0]->getPixel(r,c)),
-  intensities.setValue(0,1,images[1]->getPixel(r,c));
-  intensities.setValue(0,2,images[2]->getPixel(r,c));
-
-  // Find inverse of normals to light sources
-  Matrix light_sources_inverse = light_sources->inverse;
-
-  // Multiply lighht_source_inverse by intensities
-  Matrix N = light_sources_inverse * intensities;
-
-  // albedo is magnitude of N
-  return calcSingleColMatrixMagnitude(N);
+  float normal_end_x = r + scaled.getValue(0,1);
+  float normal_end_y = c + scaled.getValue(0,2);
+  line(img, r, c, int(normal_end_x), int(normal_end_y), 255); 
 }
