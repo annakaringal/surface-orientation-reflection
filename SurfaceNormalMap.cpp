@@ -24,33 +24,31 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
   string params;
   vector<string> param_strings; 
   if (readf.is_open()){
-
       // For each line in file
+      int count_ls = 0;
       while(getline(readf, params)){
         // Split up line into different vars & save as new matrix
         istringstream pss(params);
         for(int i=0; i<3; i++){
             string p;    
             getline(pss, p,' ');
-
             if (!isValidType<int, string>(p)){
               cerr << "ERROR: Light source vector  must be an integer." << endl;
               exit(-1);
             }
             float p_int = atof(p.c_str());
-
             if (i==0){
-                light_sources->setValue(i,0,p_int);
+                light_sources->setValue(count_ls,i,p_int);
             } else if (i == 1){
-                light_sources->setValue(i,1,p_int);
+                light_sources->setValue(count_ls,i,p_int);
             } else {
-                light_sources->setValue(i,2,p_int);
+                light_sources->setValue(count_ls,i,p_int);
             }
         }
+        count_ls++;
       }
   }
   readf.close();
-
 };
 
 void SurfaceNormalMap::generateGridPoints(int step, int threshold){
