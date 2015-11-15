@@ -116,23 +116,35 @@ void SurfaceNormalMap::calcAndDrawNormals(Image* output_img){
   }
 }
 
-Matrix SurfaceNormalMap::calcNormal(int r, int c){
-  // Get brightness for each of the 3 images in images
+Matrix SurfaceNormalMap::calcAlbedoNormal(int r, int c){
+  // Get brightness intensities for each of the 3 images in images
   Matrix intensities(3,1);
   intensities.setValue(0,0,float(images[0]->getPixel(r,c)));
   intensities.setValue(1,0,float(images[1]->getPixel(r,c)));
   intensities.setValue(2,0,float(images[2]->getPixel(r,c)));
 
-  // Multiply light_source_inverse by intensities
-  Matrix N = light_sources_inverse * intensities;
+  // Multiply light_source_inverse by intensities to get albedo * normal
+  return light_sources_inverse * intensities;
+}
 
-  // divide by magnitude to get orientation of normal
-  float magnitude = magnitude(N);
-  Matrix normalized(3,1);
-  normalized.setValue(0,0, N.getValue(0,0) / magnitude),
-  normalized.setValue(1,0, N.getValue(1,0) / magnitude);
-  normalized.setValue(2,0, N.getValue(2,0) / magnitude);
-  return normalized;
+Matrix SurfaceNormalMap::calcNormal(int r, int c){
+  // Get the albedo & normal as a single matrix
+  Matrix albedo_normal = calcAlbedoNormal(r,c);
+
+  // Albedo is the magnitude, so divide by magnitude to get normal vector
+  float mag = magnitude(albedo_normal);
+  Matrix normal(3,1);
+  normal.setValue(0,0, albedo_normal.getValue(0,0) / mag),
+  normal.setValue(1,0, albedo_normal.getValue(1,0) / mag);
+  normal.setValue(2,0, albedo_normal.getValue(2,0) / mag);
+  return normal;
+}
+
+float SurfaceNormalMap::calcAlbedo(int r, int c){
+  // Get the albedo & normal as a single matrix
+  // Albedo is the magnitude of this matrix
+  Matrix albedo_normal = calcAlbedoNormal(r,c);
+  return magnitude(albedo_normal);
 }
 
 void SurfaceNormalMap::drawNormal(int r, int c, Matrix normal, Image* img){
@@ -140,4 +152,40 @@ void SurfaceNormalMap::drawNormal(int r, int c, Matrix normal, Image* img){
   int normal_end_x = r + scaled.getValue(0,0);
   int normal_end_y = c + scaled.getValue(1,0);
   line(img, r, c, normal_end_x, normal_end_y, 255); 
+}
+
+void SurfaceNormalMap::generateAlbedoMap(int threshold){
+  int rows = images[0]->getNRows();
+  int cols = images[0]->getNCols();
+  max_albedo = -INFINITY;
+
+  for (int i=0; i<rows; i++){
+    vector<float> row; 
+    for (int j=0; j<cols; j++){
+      if (visibleInAllImages(i,j,threshold)){
+        float a = calcAlbedo(i,j);
+        row.push_back(a);
+        if (a > max_albedo){
+          max_albedo = a;
+        } 
+      } else { 
+        row.push_back(0);
+      }
+    }
+    albedo_map.push_back(row);
+  }
+}
+
+void SurfaceNormalMap::shadeAlbedo(Image* output_img){
+  float scale_factor = 255 / max_albedo;
+
+  for (int i=0; i<output_img->getNRows(); i++){
+    for (int j=0; j<output_img->getNCols(); j++){
+      if (albedo_map[i][j] != 0 ){
+        output_img->setPixel(i,j, albedo_map[i][j] * scale_factor);
+      } else { 
+        output_img->setPixel(i,j,0);
+      }
+    }
+  }
 }

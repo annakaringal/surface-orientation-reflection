@@ -12,6 +12,9 @@ s2: s2.o Sphere.o Validation.o Matrix.o Image.o Pgm.o
 s3: s3.o SurfaceNormalMap.o Validation.o Matrix.o Image.o Pgm.o Line.o
 	$(CC) s3.o SurfaceNormalMap.o Validation.o Matrix.o Image.o Pgm.o Line.o -o s3
 
+s4: s4.o SurfaceNormalMap.o Validation.o Matrix.o Image.o Pgm.o Line.o
+	$(CC) s4.o SurfaceNormalMap.o Validation.o Matrix.o Image.o Pgm.o Line.o -o s4
+
 s1.o: s1.cpp
 	$(CC) -c s1.cpp
 
@@ -20,6 +23,9 @@ s2.o: s2.cpp
 
 s3.o: s3.cpp
 	$(CC) -c s3.cpp
+
+s4.o: s4.cpp
+	$(CC) -c s4.cpp
 
 Matrix.o: Matrix.cpp
 	$(CC) -c Matrix.cpp
@@ -55,4 +61,4 @@ Line.o: pgm/Line.cpp
 	$(CC) -c pgm/Line.cpp
 
 clean:
-	rm *o s1 s2 s3
+	rm *o s1 s2 s3 s4
