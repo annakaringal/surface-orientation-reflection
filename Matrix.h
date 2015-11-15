@@ -13,6 +13,7 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <stdexcept>
 
 using namespace std;
 
@@ -74,14 +75,22 @@ public:
   float getValue(int r, int c) const { return getVal(r,c); };
 
   // PUBLIC SETTER
-  void setValue(int r, int c, float v) { setVal(r,c,v); };
+  void setValue(int r, int c, float v) throw(out_of_range){
+    setVal(r,c,v);
+  };
 
   // CALCULATES & TRANSFORMS PROPERTIES OF MATRIX
-  float determinant() { return calcDeterminant(); };
+  float determinant() throw (domain_error) {
+    return calcDeterminant();
+  };
 
-  Matrix inverse() { return calcInverse(); };
+  Matrix inverse() throw (domain_error) {
+    return calcInverse();
+  };
 
-  Matrix cofactor() { return calcCofactor(); };
+  Matrix cofactor() throw(domain_error) {
+    return calcCofactor();
+  };
 
   Matrix transpose() { return calcTranspose(); };
 
@@ -92,7 +101,7 @@ public:
   // OVERLOAD * OPERATOR TO SUPPORT SCALING AND MATRIX PRODUCT
   Matrix operator* (float x);
 
-  Matrix operator* (Matrix m);
+  Matrix operator* (Matrix m) throw (domain_error);
 
 private:
 
@@ -100,7 +109,7 @@ private:
 
   float getVal(int r, int c) const;
 
-  void setVal(int r, int c, float v);
+  void setVal(int r, int c, float v) throw (out_of_range);
 
   int getNRows() const;
 
@@ -110,15 +119,15 @@ private:
 
   bool validCol(int c);
 
-  float calcDeterminant();
+  float calcDeterminant() throw(domain_error);
 
-  Matrix calcInverse();
+  Matrix calcInverse() throw(domain_error);
 
-  Matrix calcCofactor();
+  Matrix calcCofactor() throw(domain_error);
 
-  Matrix calcMinors();
+  Matrix calcMinors() throw(domain_error);
 
-  float getMinor(int r, int c);
+  float getMinor(int r, int c) throw(domain_error);
 
   Matrix calcTranspose();
 
@@ -127,6 +136,6 @@ private:
 };
 
 // Returns magnitude of a single row or single column matrix
-float magnitude(Matrix m);
+float magnitude(Matrix m) throw(domain_error);
 
 #endif

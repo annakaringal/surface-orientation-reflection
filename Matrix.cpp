@@ -2,11 +2,11 @@
 
 float Matrix::getVal(int r, int c) const { return matrix[r][c]; }
 
-void Matrix::setVal(int r, int c, float v){
-  if (validRow(r) && validCol(c)) {
-    matrix[r][c] = v;
+void Matrix::setVal(int r, int c, float v) throw (out_of_range) {
+  if (!validRow(r) || !validCol(c)) {
+    throw out_of_range("Row or column out of range");
   } 
-  // TODO: raise excep if not valid row or col
+  matrix[r][c] = v;
 }
 
 int Matrix::getNRows() const { return matrix.size(); }
@@ -20,8 +20,11 @@ bool Matrix::validRow(int r){ return r >= 0 && r < getRows(); }
 
 bool Matrix::validCol(int c){ return c >= 0 && c < getCols(); }
 
-float Matrix::calcDeterminant(){
-  // TODO: Raise exception if not a square matrix
+float Matrix::calcDeterminant() throw (domain_error){
+  if (getRows() != getCols()){ 
+    throw domain_error("Cannot calculate determinant: matrix is not a square matrix");
+  }
+
   float det = 0;
   int rows = getRows();
   int cols = getCols();
@@ -49,22 +52,34 @@ float Matrix::calcDeterminant(){
   }
 }
 
-Matrix Matrix::calcInverse(){
-  // TODO: raise exception if det == 0 or is not a square matrix
+Matrix Matrix::calcInverse() throw (domain_error){
+  if (getRows() != getCols()){ 
+    throw domain_error("Matrix has no inverse: not a square matrix");
+  }
+
+  float det = determinant();
+  if (det == 0){ 
+    throw domain_error("Matrix has no inverse: Determinant is 0");
+  }
   // transpose cofactor to get adjugate
   Matrix adjugate = cofactor().transpose();
   // Inverse is adjugate * 1/determinant
   return adjugate * (1/determinant());
 }
 
-Matrix Matrix::calcCofactor(){ 
-  // TODO: raise exception if not square matrix
+Matrix Matrix::calcCofactor() throw (domain_error){ 
+  if (getRows() != getCols()){ 
+    throw domain_error("Cannot calculate cofactor: matrix is not a square matrix");
+  } 
+
   // Cofactor is matrix of minors checkerboarded
   return minors().checkerboard();
 }
 
-Matrix Matrix::calcMinors(){ 
-  // TODO: raise exception if not square matrix
+Matrix Matrix::calcMinors() throw (domain_error){ 
+  if (getRows() != getCols()){ 
+    throw domain_error("Cannot calculate matrix of minors: matrix is not a square matrix");
+  }
   Matrix m(getRows(), getCols());
    for (int i=0; i<getRows(); i++){
       for (int j=0; j<getCols(); j++){
@@ -75,10 +90,12 @@ Matrix Matrix::calcMinors(){
    return m;
 }
 
-float Matrix::getMinor(int r, int c){
-  // TODO: raise exception if not square matrix
-  Matrix minor(getRows()-1, getCols()-1);
+float Matrix::getMinor(int r, int c) throw (domain_error){
+  if (getRows() != getCols()){ 
+    throw domain_error("Cannot calculate minor: matrix is not a square matrix");
+  }
 
+  Matrix minor(getRows()-1, getCols()-1);
   // set values of minor matrix to rows/cols not equal to r or c
   for (int i=0; i<getRows(); i++){
     for (int j=0; j<getCols(); j++){
@@ -135,8 +152,10 @@ Matrix Matrix::performCheckerboard(){
   return m;
 }
 
-Matrix Matrix::operator* (Matrix m){
-  // TODO: raise exception if cannot be multiplied
+Matrix Matrix::operator* (Matrix m) throw (domain_error){
+  if (getCols() != m.getRows()){ 
+    throw domain_error("Matrices cannot be multiplied.");
+  }
   Matrix new_m(getRows(), m.getCols());
   int rows = new_m.getRows();
   int cols = new_m.getCols();
@@ -153,8 +172,10 @@ Matrix Matrix::operator* (Matrix m){
   return new_m;
 }
 
-float magnitude(Matrix m){
-  // TODO: raise exception if not a single col matrix
+float magnitude(Matrix m) throw (domain_error){
+  if (m.getRows() != 1 || m.getCols() != 1){ 
+    throw domain_error("Cannot calculate magnitude: single row or column matrix required");
+  }
   float mag_sq = 0;
   // for single col matrix
   if (m.getRows() == 1){
