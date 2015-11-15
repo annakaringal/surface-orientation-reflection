@@ -183,6 +183,8 @@ void SurfaceNormalMap::shadeAlbedo(Image* output_img){
     for (int j=0; j<output_img->getNCols(); j++){
       if (albedo_map[i][j] != 0 ){
         output_img->setPixel(i,j, albedo_map[i][j] * scale_factor);
+      } else { 
+        output_img->setPixel(i,j,0);
       }
     }
   }
