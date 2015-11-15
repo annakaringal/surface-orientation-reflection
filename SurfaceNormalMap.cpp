@@ -72,8 +72,10 @@ void SurfaceNormalMap::setLightSourcesFromFile(const char* fname){
 void SurfaceNormalMap::generateGridPoints(int step, int threshold){
   int rows = images[0]->getNRows();
   int cols = images[0]->getNCols();
+  // Only calculate grid points at each step point
   for (int i=0; i<rows; i += step){
     for (int j=0; j<cols; j += step){
+      // if pixel value is below threshold for all images, add to grid_points
       if (visibleInAllImages(i,j,threshold)){
         grid_points.push_back(make_pair(i,j));
       }
@@ -109,9 +111,12 @@ void SurfaceNormalMap::drawGridPoints(Image* output_img){
 
 void SurfaceNormalMap::calcAndDrawNormals(Image* output_img){
   for (int i=0; i<grid_points.size(); i++){
+    // at each grid point
     int x = grid_points[i].first;
     int y = grid_points[i].second;
+    // calculate normal at point
     Matrix n = calcNormal(x,y);
+    // draw on image at point
     drawNormal(x, y, n, output_img);
   }
 }
@@ -148,6 +153,7 @@ float SurfaceNormalMap::calcAlbedo(int r, int c){
 }
 
 void SurfaceNormalMap::drawNormal(int r, int c, Matrix normal, Image* img){
+  // scale normal so it's length is 10 and draw on image starting at pixel r,c
   Matrix scaled = normal * (10 / magnitude(normal));
   int normal_end_x = r + scaled.getValue(0,0);
   int normal_end_y = c + scaled.getValue(1,0);
@@ -160,18 +166,24 @@ void SurfaceNormalMap::generateAlbedoMap(int threshold){
   max_albedo = -INFINITY;
 
   for (int i=0; i<rows; i++){
+    // get the row
     vector<float> row; 
     for (int j=0; j<cols; j++){
+      // only calculate albedo if pixel i,j is below threshold in all images
       if (visibleInAllImages(i,j,threshold)){
         float a = calcAlbedo(i,j);
-        row.push_back(a);
+        // find the largest albedo value and set to class var
         if (a > max_albedo){
           max_albedo = a;
         } 
+        // add value to row
+        row.push_back(a);
       } else { 
+        // not visible: add to row as 0
         row.push_back(0);
       }
     }
+    // add row to albedo map
     albedo_map.push_back(row);
   }
 }
@@ -181,9 +193,12 @@ void SurfaceNormalMap::shadeAlbedo(Image* output_img){
 
   for (int i=0; i<output_img->getNRows(); i++){
     for (int j=0; j<output_img->getNCols(); j++){
+      // only add to map if albedo is non-zero
       if (albedo_map[i][j] != 0 ){
+        // scale so the maximum albedo is 255 
         output_img->setPixel(i,j, albedo_map[i][j] * scale_factor);
       } else { 
+        // not in map, color pixel as black
         output_img->setPixel(i,j,0);
       }
     }
