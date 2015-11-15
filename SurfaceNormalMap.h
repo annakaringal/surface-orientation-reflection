@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <limits>
 
 #include "pgm/Image.h"
 #include "Validation.h"
@@ -25,6 +26,7 @@ public:
 
   SurfaceNormalMap(const char* dirs_fname, vector<Image*> obj_imgs, int threshold) : images(obj_imgs) {
     setLightSourcesFromFile(dirs_fname);
+    generateAlbedoMap(threshold);
   };
 
   ~SurfaceNormalMap(){
@@ -36,11 +38,17 @@ public:
     calcAndDrawNormals(output_img);
   }
 
+  void shadeWithAlbedo(Image* output_img){
+    shadeAlbedo(output_img);
+  }
+
 private:
   Matrix* light_sources;
   Matrix light_sources_inverse;
   vector< pair<int, int> > grid_points;
   vector<Image*> images;
+  vector< vector<float> > albedo_map;
+  float max_albedo;
 
   void setLightSourcesFromFile(const char* fname);
 
@@ -60,6 +68,9 @@ private:
 
   float calcAlbedo(int r, int c);
 
+  void generateAlbedoMap(int threshold);
+
+  void shadeAlbedo(Image* output_img);
 };
 
 #endif

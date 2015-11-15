@@ -153,3 +153,35 @@ void SurfaceNormalMap::drawNormal(int r, int c, Matrix normal, Image* img){
   int normal_end_y = c + scaled.getValue(1,0);
   line(img, r, c, normal_end_x, normal_end_y, 255); 
 }
+
+void SurfaceNormalMap::generateAlbedoMap(int threshold){
+  int rows = images[0]->getNRows();
+  int cols = images[0]->getNCols();
+  max_albedo = -INFINITY;
+
+  for (int i=0; i<rows; i++){
+    for (int j=0; j<cols; j++){
+      if (visibleInAllImages(i,j,threshold)){
+        float a = calcAlbedo(i,j);
+        albedo_map[i][j] = a;
+        if (a > max_albedo){
+          max_albedo = a;
+        } 
+      } else { 
+        albedo_map[i][j] = 0;
+      }
+    }
+  }
+}
+
+void SurfaceNormalMap::shadeAlbedo(Image* output_img){
+  float scale_factor = 255 / max_albedo;
+
+  for (int i=0; i<output_img->getNRows(); i++){
+    for (int j=0; j<output_img->getNCols(); j++){
+      if (albedo_map[i][j] != 0 ){
+        output_img->setPixel(i,j, albedo_map[i][j] * scale_factor);
+      }
+    }
+  }
+}
