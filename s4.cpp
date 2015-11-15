@@ -1,3 +1,21 @@
+/*****************************************************************************
+ Title:             s4.cpp
+ Author:            Anna Cristina Karingal
+ Created on:        November 14, 2015
+ Description:       Uses photometric stereo technigues to estimate the albedo of
+                    the object using three different images of the same
+                    object under three different known light sources. Shades the
+                    albedo onto a copy of the image. 
+ Requirements:      - The light source vectors in the input text file are the same
+                      as those for the given images, in the same order.
+                    - Threshold is an integer >= 0 && <= 255.
+ Build:             Compile by running 'make s4' in the working directory
+ 
+ Usage:             ./s4 light_sources_vectors.txt object1.img object2.img object3.img threshold output_img.pgm
+ 
+ Last Modified:     November 14, 2015  
+ *****************************************************************************/
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>

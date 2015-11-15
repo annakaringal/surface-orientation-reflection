@@ -1,3 +1,13 @@
+/*****************************************************************************
+ Title:             Object.h
+ Author:            Anna Cristina Karingal
+ Created on:        September 20, 2015
+ Description:       Class to recognize the different objects in a binary image
+                    and label each image with a different color
+ 
+ Last Modified:     September 28, 2015
+ *****************************************************************************/
+
 #ifndef OBJECT_LABELER_H
 #define OBJECT_LABELER_H
 

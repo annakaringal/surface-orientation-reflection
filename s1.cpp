@@ -1,3 +1,16 @@
+/*****************************************************************************
+ Title:             s1.cpp
+ Author:            Anna Cristina Karingal
+ Created on:        November 8, 2015
+ Description:       Calculates the center and radius of a sphere object in a
+                    single image, assuming orthographic projection.
+ Build:             Compile by running 'make s1' in the working directory
+ 
+ Usage:             ./s1 input_img.pgm input_threshold_value output_params_file.txt
+ 
+ Last Modified:     November 8, 2015  
+ *****************************************************************************/
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -39,7 +52,7 @@ int main(int argc, const char * argv[]) {
     Image* binary_img = new Image;
     convertToBinary(input_img, binary_img, threshold);
 
-    // Label objects in image and store in image databas
+    // Label objects in image and store in image database
     ObjectLabeler labeler;
     Image* labeled_img = new Image;
     labeler.labelObjects(binary_img, labeled_img);

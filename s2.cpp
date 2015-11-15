@@ -1,3 +1,23 @@
+/*****************************************************************************
+ Title:             s2.cpp
+ Author:            Anna Cristina Karingal
+ Created on:        November 8, 2015
+ Description:       Given the sphere center and radius, estimates the direction
+                    vector of the light source of the sphere for each image by
+                    finding the normal of the sphere at the brightest pixel.
+                    Writes the vector for the lightt source of each image
+                    as a three numbers on a line in the output file.
+
+ Requirements:      - all sphere images contain the same sphere at the same
+                        position in the image
+                    - the spheres in the image have the same center and radius as
+                        given by the input parameters file
+ Build:             Compile by running 'make s2' in the working directory
+ 
+ Usage:             ./s2 input_params_file.txt sphere_img_1.pgm sphere_img_2.pgm sphere_img_3.pgm  output_directions_file.txt
+ 
+ Last Modified:     November 13, 2015  
+ *****************************************************************************/
 #include <iostream>
 #include <fstream>
 #include <cstdlib>

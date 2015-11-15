@@ -1,3 +1,13 @@
+/*****************************************************************************
+ Title:             Object.h
+ Author:            Anna Cristina Karingal
+ Created on:        September 20, 2015
+ Description:       Class to calculate and store attributes for a single object
+                    in an image.
+ 
+ Last Modified:     Oct 20, 2015
+ *****************************************************************************/
+
 #ifndef OBJECT_H
 #define OBJECT_H
 
