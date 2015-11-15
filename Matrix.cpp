@@ -12,6 +12,7 @@ void Matrix::setVal(int r, int c, float v){
 int Matrix::getNRows() const { return matrix.size(); }
 
 int Matrix::getNCols() const {
+  // return 0 if no rows in matrix or return size of first row
   return (getRows() > 0 ? matrix[0].size(): 0);
 }
 
@@ -67,6 +68,7 @@ Matrix Matrix::calcMinors(){
   Matrix m(getRows(), getCols());
    for (int i=0; i<getRows(); i++){
       for (int j=0; j<getCols(); j++){
+        // set value at i,j to determinant of matrix minor i,j
         m.setValue(i,j, getMinor(i,j));
       }
    }
@@ -76,6 +78,8 @@ Matrix Matrix::calcMinors(){
 float Matrix::getMinor(int r, int c){
   // TODO: raise exception if not square matrix
   Matrix minor(getRows()-1, getCols()-1);
+
+  // set values of minor matrix to rows/cols not equal to r or c
   for (int i=0; i<getRows(); i++){
     for (int j=0; j<getCols(); j++){
       if (i!=r && j!=c){
@@ -92,10 +96,12 @@ float Matrix::getMinor(int r, int c){
       }
     } 
   }
+  // return determinant of minor
   return minor.determinant();
 }
 
 Matrix Matrix::operator* (float x){
+  // scale each value in matrix by factor x
   Matrix new_m(getRows(), getCols());
    for (int i=0; i<getRows(); i++){
       for (int j=0; j<getCols(); j++){
@@ -132,11 +138,11 @@ Matrix Matrix::performCheckerboard(){
 Matrix Matrix::operator* (Matrix m){
   // TODO: raise exception if cannot be multiplied
   Matrix new_m(getRows(), m.getCols());
-
   int rows = new_m.getRows();
   int cols = new_m.getCols();
    for (int i=0; i<rows; i++){
       for (int j=0; j<cols; j++){
+        // set value at i,j to dot product at i,j
         float dp = 0;
         for (int r=0; r<rows; r++){
           dp += (getValue(i,r) * m.getValue(r,j));
@@ -150,15 +156,18 @@ Matrix Matrix::operator* (Matrix m){
 float magnitude(Matrix m){
   // TODO: raise exception if not a single col matrix
   float mag_sq = 0;
+  // for single col matrix
   if (m.getRows() == 1){
     for (int c=0; c < m.getCols(); c++){
       mag_sq += m.getValue(0,c) * m.getValue(0,c);
     }
   } 
+  // for single row matrix
   if (m.getCols() == 1){
     for (int r=0; r < m.getRows(); r++){
       mag_sq += m.getValue(r,0) * m.getValue(r,0);
     }
   }
+  // magnitude is square root of squares of all components
   return sqrt(mag_sq);
 }
