@@ -22,6 +22,11 @@ public:
     generateGridPoints(step, threshold);
   };
 
+
+  SurfaceNormalMap(const char* dirs_fname, vector<Image*> obj_imgs, int threshold) : images(obj_imgs) {
+    setLightSourcesFromFile(dirs_fname);
+  };
+
   ~SurfaceNormalMap(){
     delete light_sources;
   }
