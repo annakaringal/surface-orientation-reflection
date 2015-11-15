@@ -160,17 +160,19 @@ void SurfaceNormalMap::generateAlbedoMap(int threshold){
   max_albedo = -INFINITY;
 
   for (int i=0; i<rows; i++){
+    vector<float> row; 
     for (int j=0; j<cols; j++){
       if (visibleInAllImages(i,j,threshold)){
         float a = calcAlbedo(i,j);
-        albedo_map[i][j] = a;
+        row.push_back(a);
         if (a > max_albedo){
           max_albedo = a;
         } 
       } else { 
-        albedo_map[i][j] = 0;
+        row.push_back(0);
       }
     }
+    albedo_map.push_back(row);
   }
 }
 
