@@ -93,8 +93,8 @@ public:
     Matrix normal = findNormal(b.x, b.y);
 
     // scale so length of vector is equal to brightest pixel
-    float magnitude = magnitude(normal);
-    return normal * (b.brightness / magnitude);
+    float mag = magnitude(normal);
+    return normal * (b.brightness / mag);
   }
 
 private:
