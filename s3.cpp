@@ -53,7 +53,7 @@ int main(int argc, const char * argv[]) {
     // Create copy of first image and draw normals map
     Image* output_img = new Image(*obj_images[0]);
 
-    snm.drawMap(output_img);
+    snm.drawNormalMap(output_img);
 
     // Write output image to file
     if (writeImage(output_img, output_img_fname) < 0){

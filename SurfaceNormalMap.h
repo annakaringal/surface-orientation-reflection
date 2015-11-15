@@ -26,7 +26,7 @@ public:
     delete light_sources;
   }
 
-  void drawMap(Image* output_img){
+  void drawNormalMap(Image* output_img){
     drawGridPoints(output_img);
     calcAndDrawNormals(output_img);
   }
