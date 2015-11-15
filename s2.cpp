@@ -56,10 +56,10 @@ int main(int argc, const char * argv[]) {
     // Write brightness vector of each sphere to file
     if (writef.is_open()) {
         for(int i=0; i < spheres.size(); i++){
-            vector<int> ls = spheres[i]->findLightSource();
-            writef << ls[0] << " ";
-            writef << ls[1] << " ";
-            writef << ls[2] << endl;
+            Matrix ls = spheres[i]->findLightSource();
+            writef << ls.getValue(0,0) << " ";
+            writef << ls.getValue(0,1) << " ";
+            writef << ls.getValue(0,2) << endl;
         }
     }
     writef.close();

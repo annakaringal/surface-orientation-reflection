@@ -1,13 +1,5 @@
 #include "Sphere.h"
 
-vector<int> scaleVector(vector<int> vec, int factor) { 
-  vector<int> scaled;
-  for (int i=0; i<vec.size(); i++){
-    scaled.push_back(vec[i] * factor);
-  }
-  return scaled;
-}
-
 void Sphere::setParamsFromFile(const char* params_fname){
   // Open file
   ifstream readf; 
@@ -118,17 +110,18 @@ pixel Sphere::findBrightestPixel(){
   return brightest;
 }
 
-vector<int> Sphere::findNormal(int i, int j){
-  vector<int> normal; 
-  normal.push_back(i);
-  normal.push_back(j);
+Matrix Sphere::findNormal(int i, int j){
+  // Calculate x-x0 and y-y0
+  float dx = i-center.first;
+  float dy = j-center.second;
 
-  // Calculate z coordinate of normal
-  // Assume center of sphere lies at coordinate 0
-  int diff_x_sq = (i - center.first) * (i - center.first);
-  int diff_y_sq = (j - center.second) * (j - center.second);
-  int r_sq = radius * radius;
-  normal.push_back(sqrt(abs(diff_x_sq + diff_y_sq - r_sq)));
+  // Calculate z - z0 
+  float dz = sqrt(fabs((dx * dx) + (dy * dy) - (radius*radius)));
 
+  // Vector is x-x0, y-y0, z-z0
+  Matrix normal(1,3);
+  normal.setValue(0,0,dx); 
+  normal.setValue(0,1,dy); 
+  normal.setValue(0,2,dz); 
   return normal;
 }

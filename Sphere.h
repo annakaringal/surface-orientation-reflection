@@ -9,28 +9,20 @@
 
 #include "pgm/Image.h"
 #include "Validation.h"
+#include "Matrix.h"
 
 using namespace std;
 
 struct SphereExtremes { 
-  int max_x;
-  int max_y;
-  int min_x; 
-  int min_y;
-
+  int max_x, max_y, min_x, min_y;
   SphereExtremes(int lx=0, int ly=0, int sx=0, int sy=0) : max_x(lx), max_y(ly), min_x(sx), min_y(sy){ 
   }
 };
 
 struct pixel { 
-  int x; 
-  int y;
-  int brightness;
-
+  int x, y, brightness;
   pixel(int i=0, int j=0, int b=0) : x(i), y(j), brightness(b){}
 };
-
-vector<int> scaleVector(vector<int> vec, int factor);
 
 class Sphere{
 
@@ -43,7 +35,7 @@ public:
 
   Sphere (Image* si, pair<float, float> c, float r) : center(c), radius(r){
     img = si;
-    };
+  };
 
   Sphere (Image* labeled_img, pair<float, float> c, int label=1) : center(c) { 
     radius = calcRadius(labeled_img, label);
@@ -53,15 +45,16 @@ public:
 
   float getRadius() { return radius; };
 
-  vector<int> findLightSource(){
+  Matrix findLightSource(){
     pixel b = findBrightestPixel();
-    vector<int> normal = findNormal(b.x, b.y);
-    return scaleVector(normal, b.brightness);
+    Matrix normal = findNormal(b.x, b.y);
+    float magnitude = magnitude(normal);
+    return normal * (b.brightness / magnitude);
   }
 
 private:
   pair <float, float> center;
-  float radius; 
+  float radius;
   Image* img;
 
   void setParamsFromFile(const char* params_fname);
@@ -70,7 +63,7 @@ private:
 
   SphereExtremes calcSphereExtremeties(Image* labeled_img, int label);
 
-  vector<int> findNormal(int i, int j);
+  Matrix findNormal(int i, int j);
 
   pixel findBrightestPixel();
 };

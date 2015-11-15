@@ -37,3 +37,5 @@ s4
 *.zip
 output/*
 *.rb
+*run*
+*test*
