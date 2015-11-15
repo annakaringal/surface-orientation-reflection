@@ -61,4 +61,4 @@ Line.o: pgm/Line.cpp
 	$(CC) -c pgm/Line.cpp
 
 clean:
-	rm *o s1 s2 s3
+	rm *o s1 s2 s3 s4
