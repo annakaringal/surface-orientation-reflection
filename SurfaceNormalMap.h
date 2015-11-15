@@ -47,9 +47,13 @@ private:
 
   void calcAndDrawNormals(Image* output_img);
 
+  Matrix calcAlbedoNormal(int r, int c);
+
   Matrix calcNormal(int r, int c);
 
   void drawNormal(int r, int c, Matrix normal, Image* img);
+
+  float calcAlbedo(int r, int c);
 
 };
 
