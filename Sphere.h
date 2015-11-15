@@ -19,6 +19,7 @@
 #include <sstream>
 #include <vector>
 #include <math.h>
+#include <cstdlib>
 
 #include "pgm/Image.h"
 #include "Validation.h"

@@ -16,6 +16,7 @@
 #include <sstream>
 #include <vector>
 #include <limits>
+#include <cstdlib>
 
 #include "pgm/Image.h"
 #include "Validation.h"
