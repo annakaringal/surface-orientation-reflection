@@ -42,7 +42,7 @@ int main(int argc, const char * argv[]) {
     int threshold = atoi(argv[5]);
 
     // Read input directions file and store in surface normal map
-    SurfaceNormalMap snm(input_dirs_fname, obj_images, step, threshold);
+    SurfaceNormalMap snm(input_dirs_fname, obj_images, threshold);
 
     // Create copy of first image and shade with albedo
     Image* output_img = new Image(*obj_images[0]);
